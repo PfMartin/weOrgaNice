@@ -1,2 +1,2 @@
 # weOrgaNice
-Organization App
+Organization Tool for ToDos and shopping
