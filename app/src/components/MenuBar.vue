@@ -9,7 +9,7 @@
         size="large"
         class="notifications-icon"
       ></ion-icon>
-      <div>Picture</div>
+      <img class="usr-img" alt="user" src="@/assets/user.png" />
     </div>
   </div>
 </template>
@@ -53,5 +53,12 @@ export default defineComponent({
 .notifications-icon {
   color: var(--icon-color);
   margin-right: 10px;
+}
+
+.usr-img {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--icon-color);
+  border-radius: 100%;
 }
 </style>

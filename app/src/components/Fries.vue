@@ -70,11 +70,11 @@ export default defineComponent({
 }
 
 .fries.is-menu-open::before {
-  transform: rotate(-45deg) translate(-10px, 5px);
+  transform: rotate(-45deg) translate(-8px, 3px);
 }
 
 .fries.is-menu-open::after {
-  transform: rotate(45deg) translate(-6px, -1px);
+  transform: rotate(45deg) translate(-8px, -3px);
 }
 
 .fries.is-menu-open {
