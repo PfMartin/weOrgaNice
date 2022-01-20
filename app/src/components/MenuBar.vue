@@ -4,7 +4,11 @@
       <Fries :isMenuOpen="isMenuOpen" @toggle-menu="toggleMenu" />
     </div>
     <div class="features-container">
-      <ion-icon name="cube-outline"></ion-icon>
+      <ion-icon
+        name="notifications-outline"
+        size="large"
+        class="notifications-icon"
+      ></ion-icon>
       <div>Picture</div>
     </div>
   </div>
@@ -43,5 +47,11 @@ export default defineComponent({
 
 .features-container {
   display: flex;
+  align-items: center;
+}
+
+.notifications-icon {
+  color: var(--icon-color);
+  margin-right: 10px;
 }
 </style>
