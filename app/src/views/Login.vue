@@ -5,7 +5,7 @@
   </div>
 
   <!-- Login -->
-  <form class="">
+  <form @submit.prevent="login" class="">
     <h1>Login</h1>
     <div class="">
       <label for="email">Email</label>
@@ -31,15 +31,36 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { supabase } from '../supabase/init';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'Login',
   setup() {
+    const router = useRouter();
+
     const email = ref<ReactiveString>(undefined);
     const password = ref<ReactiveString>(undefined);
     const errorMsg = ref<ReactiveString>(undefined);
 
-    return { email, password, errorMsg };
+    const login = async (): Promise<void> => {
+      try {
+        const { error } = await supabase.auth.signIn({
+          email: email.value,
+          password: password.value,
+        });
+
+        if (error) throw error;
+        router.push({ name: 'Dashboard' });
+      } catch (error) {
+        errorMsg.value = `Error: ${error.message}`;
+        setTimeout(() => {
+          errorMsg.value = undefined;
+        }, 3000);
+      }
+    };
+
+    return { email, password, errorMsg, login };
   },
 });
 </script>

@@ -53,10 +53,10 @@ export default defineComponent({
     const confirmPassword = ref<ReactiveString>(undefined);
     const errorMsg = ref<ReactiveString>(undefined);
 
-    const register = async () => {
+    const register = async (): Promise<void> => {
       if (password.value === confirmPassword.value) {
         try {
-          const { error } = await supabase.auth.signUp({
+          const { error }: { error: any } = await supabase.auth.signUp({
             email: email.value,
             password: password.value,
           });
@@ -64,7 +64,7 @@ export default defineComponent({
           if (error) throw error;
           router.push({ name: 'Login' });
         } catch (error) {
-          errorMsg.value = error.message;
+          errorMsg.value = `Error: ${error.message}`;
           setTimeout(() => {
             errorMsg.value = undefined;
           }, 3000);
