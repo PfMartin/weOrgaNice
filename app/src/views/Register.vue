@@ -4,9 +4,9 @@
     <p>{{ errorMsg }}</p>
   </div>
 
-  <!-- Login -->
+  <!-- Register -->
   <form class="">
-    <h1>Login</h1>
+    <h1>Register</h1>
     <div class="">
       <label for="email">Email</label>
       <input type="email" required class="" id="email" v-model="email" />
@@ -21,10 +21,20 @@
         v-model="password"
       />
     </div>
-    <button type="submit" class="btn">Login</button>
+    <div class="">
+      <label for="confirm-password">Confirm Password</label>
+      <input
+        type="password"
+        required
+        class=""
+        id="confirm-password"
+        v-model="confirmPassword"
+      />
+    </div>
+    <button type="submit" class="btn">Register</button>
     <p>
-      Don't have an account?
-      <router-link :to="{ name: 'Register' }">Register</router-link>
+      Already have an account?
+      <router-link :to="{ name: 'Login' }">Login</router-link>
     </p>
   </form>
 </template>
@@ -33,13 +43,14 @@
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: 'Login',
+  name: 'Register',
   setup() {
     const email = ref<ReactiveString>(null);
     const password = ref<ReactiveString>(null);
+    const confirmPassword = ref<ReactiveString>(null);
     const errorMsg = ref<ReactiveString>(null);
 
-    return { email, password, errorMsg };
+    return { email, password, confirmPassword, errorMsg };
   },
 });
 </script>

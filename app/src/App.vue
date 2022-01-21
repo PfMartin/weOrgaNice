@@ -1,6 +1,6 @@
 <template>
-  <menu-bar />
-  <router-view />
+  <menu-bar></menu-bar>
+  <router-view></router-view>
 </template>
 
 <script lang="ts">

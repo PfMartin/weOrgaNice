@@ -49,7 +49,8 @@ export default defineComponent({
   background-color: #fff;
   position: absolute;
   height: 4px;
-  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  /* transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1); */
+  transition: transform 200ms ease-out;
   border-radius: 2px;
 }
 

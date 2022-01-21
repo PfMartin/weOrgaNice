@@ -1,0 +1,1 @@
+type ReactiveString = string | null;
