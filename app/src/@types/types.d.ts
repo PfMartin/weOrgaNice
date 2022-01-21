@@ -1,1 +1,1 @@
-type ReactiveString = string | null;
+type ReactiveString = string | undefined;

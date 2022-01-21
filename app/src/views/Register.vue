@@ -5,7 +5,7 @@
   </div>
 
   <!-- Register -->
-  <form class="">
+  <form @submit.prevent="register" class="">
     <h1>Register</h1>
     <div class="">
       <label for="email">Email</label>
@@ -41,16 +41,43 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { supabase } from '../supabase/init';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'Register',
   setup() {
-    const email = ref<ReactiveString>(null);
-    const password = ref<ReactiveString>(null);
-    const confirmPassword = ref<ReactiveString>(null);
-    const errorMsg = ref<ReactiveString>(null);
+    const router = useRouter();
+    const email = ref<ReactiveString>(undefined);
+    const password = ref<ReactiveString>(undefined);
+    const confirmPassword = ref<ReactiveString>(undefined);
+    const errorMsg = ref<ReactiveString>(undefined);
 
-    return { email, password, confirmPassword, errorMsg };
+    const register = async () => {
+      if (password.value === confirmPassword.value) {
+        try {
+          const { error } = await supabase.auth.signUp({
+            email: email.value,
+            password: password.value,
+          });
+
+          if (error) throw error;
+          router.push({ name: 'Login' });
+        } catch (error) {
+          errorMsg.value = error.message;
+          setTimeout(() => {
+            errorMsg.value = undefined;
+          }, 3000);
+        }
+        return;
+      }
+      errorMsg.value = 'Error: Passwords do not match';
+      setTimeout(() => {
+        errorMsg.value = undefined;
+      }, 3000);
+    };
+
+    return { email, password, confirmPassword, errorMsg, register };
   },
 });
 </script>

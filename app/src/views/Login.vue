@@ -35,9 +35,9 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name: 'Login',
   setup() {
-    const email = ref<ReactiveString>(null);
-    const password = ref<ReactiveString>(null);
-    const errorMsg = ref<ReactiveString>(null);
+    const email = ref<ReactiveString>(undefined);
+    const password = ref<ReactiveString>(undefined);
+    const errorMsg = ref<ReactiveString>(undefined);
 
     return { email, password, errorMsg };
   },
