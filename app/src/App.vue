@@ -1,11 +1,14 @@
 <template>
   <menu-bar></menu-bar>
   <router-view></router-view>
+  <h1>{{ user }}</h1>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, computed, ComputedRef } from 'vue';
+import { useStore } from 'vuex';
 import { supabase } from './supabase/init';
+
 import MenuBar from '@/components/MenuBar.vue';
 
 export default defineComponent({
@@ -13,11 +16,16 @@ export default defineComponent({
     MenuBar,
   },
   setup() {
-    const user = supabase.auth.user();
+    const store = useStore();
+    store.dispatch('setUser', supabase.auth.user());
+    const user: ComputedRef<string | null> = computed((): string | null => {
+      console.log(store.getters.user);
+      return store.getters.user;
+    });
 
     const getCategories = async () => {
       try {
-        console.log(supabase);
+        const appReady = ref(null);
 
         // const { data: category, error } = await supabase
         //   .from('category')
@@ -32,6 +40,10 @@ export default defineComponent({
     };
 
     getCategories();
+
+    return {
+      user,
+    };
   },
 });
 </script>
