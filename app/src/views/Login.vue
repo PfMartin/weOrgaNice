@@ -1,52 +1,36 @@
 <template>
-  <brand-banner></brand-banner>
-  <content-tile>
-    <template v-slot:default>
-      <!-- Login -->
-      <form @submit.prevent="login">
-        <h1>Login</h1>
-
-        <!-- Error Handling -->
-        <div v-if="errorMsg" class="error-msg">
-          <p>{{ errorMsg }}</p>
+  <brand-banner />
+  <system-message v-if="errorMsg" :msg="errorMsg" />
+  <form @submit.prevent="login">
+    <content-tile headline="Login">
+      <template v-slot:default>
+        <div class="input-element">
+          <label for="email">Email</label>
+          <input type="email" required class="" id="email" v-model="email" />
         </div>
+        <div class="input-element">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            required
+            class=""
+            id="password"
+            v-model="password"
+          />
+        </div>
+        <div class="btn-bar">
+          <button type="submit" class="btn">Login</button>
+        </div>
+      </template>
 
-        <input-section>
-          <template v-slot:default>
-            <div class="input-element">
-              <label for="email">Email</label>
-              <input
-                type="email"
-                required
-                class=""
-                id="email"
-                v-model="email"
-              />
-            </div>
-            <div class="input-element">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                required
-                class=""
-                id="password"
-                v-model="password"
-              />
-            </div>
-            <div class="btn-bar">
-              <button type="submit" class="btn">Login</button>
-            </div>
-          </template>
-        </input-section>
-        <footer class="">
-          <p>
-            Don't have an account?
-            <router-link :to="{ name: 'Register' }">Register</router-link>
-          </p>
-        </footer>
-      </form>
-    </template>
-  </content-tile>
+      <template v-slot:footer>
+        <p>
+          Don't have an account?
+          <router-link :to="{ name: 'Register' }">Register</router-link>
+        </p>
+      </template>
+    </content-tile>
+  </form>
 </template>
 
 <script lang="ts">
@@ -55,15 +39,15 @@ import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
 
 import BrandBanner from '@/components/BrandBanner.vue';
+import SystemMessage from '@/components/SystemMessage.vue';
 import ContentTile from '@/components/ContentTile.vue';
-import InputSection from '@/components/InputSection.vue';
 
 export default defineComponent({
   name: 'Login',
   components: {
     BrandBanner,
+    SystemMessage,
     ContentTile,
-    InputSection,
   },
   setup() {
     const router = useRouter();
@@ -73,6 +57,7 @@ export default defineComponent({
     const errorMsg = ref<ReactiveString>(undefined);
 
     const login = async (): Promise<void> => {
+      console.log('loggin in');
       try {
         const { error } = await supabase.auth.signIn({
           email: email.value,
@@ -85,7 +70,7 @@ export default defineComponent({
         errorMsg.value = `Error: ${error.message}`;
         setTimeout(() => {
           errorMsg.value = undefined;
-        }, 3000);
+        }, 5000);
       }
     };
 
@@ -109,14 +94,14 @@ export default defineComponent({
   display: grid;
 }
 
-.input-section .btn-bar {
+.btn-bar {
   margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.input-section .btn-bar .btn {
+.btn-bar .btn {
   border: none;
   background: var(--dark-bg);
   border-radius: 5px;
@@ -132,13 +117,7 @@ input:focus {
   border-color: var(--bg-dark);
 }
 
-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 0.5rem;
-}
-
-footer a {
+a {
   text-decoration: none;
   color: var(--accent-blue);
 }

@@ -1,62 +1,47 @@
 <template>
   <brand-banner></brand-banner>
-  <content-tile>
-    <template v-slot:default>
-      <!-- Register -->
-      <form @submit.prevent="register" class="">
-        <h1>Register</h1>
-
-        <!-- Error Handling -->
-        <div v-if="errorMsg" class="error-msg">
-          <p>{{ errorMsg }}</p>
+  <transition name="slide">
+    <system-message v-if="errorMsg" :msg="errorMsg" />
+  </transition>
+  <form @submit.prevent="register" class="">
+    <content-tile headline="Register" bgColor="violet">
+      <template v-slot:default>
+        <div class="input-element">
+          <label for="email">Email</label>
+          <input type="email" required class="" id="email" v-model="email" />
         </div>
-
-        <input-section bgColor="violet">
-          <template v-slot:default>
-            <div class="input-element">
-              <label for="email">Email</label>
-              <input
-                type="email"
-                required
-                class=""
-                id="email"
-                v-model="email"
-              />
-            </div>
-            <div class="input-element">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                required
-                class=""
-                id="password"
-                v-model="password"
-              />
-            </div>
-            <div class="input-element">
-              <label for="confirm-password">Confirm Password</label>
-              <input
-                type="password"
-                required
-                class=""
-                id="confirm-password"
-                v-model="confirmPassword"
-              />
-            </div>
-            <div class="btn-bar">
-              <button type="submit" class="btn">Register</button>
-            </div>
-          </template>
-        </input-section>
-        <footer>
-          <p>
-            Already have an account?
-            <router-link :to="{ name: 'Login' }"> Login</router-link>
-          </p>
-        </footer>
-      </form>
-    </template>
-  </content-tile>
+        <div class="input-element">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            required
+            class=""
+            id="password"
+            v-model="password"
+          />
+        </div>
+        <div class="input-element">
+          <label for="confirm-password">Confirm Password</label>
+          <input
+            type="password"
+            required
+            class=""
+            id="confirm-password"
+            v-model="confirmPassword"
+          />
+        </div>
+        <div class="btn-bar">
+          <button type="submit" class="btn">Register</button>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <p>
+          Already have an account?
+          <router-link :to="{ name: 'Login' }"> Login</router-link>
+        </p>
+      </template>
+    </content-tile>
+  </form>
 </template>
 
 <script lang="ts">
@@ -65,15 +50,15 @@ import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
 
 import BrandBanner from '@/components/BrandBanner.vue';
+import SystemMessage from '@/components/SystemMessage.vue';
 import ContentTile from '@/components/ContentTile.vue';
-import InputSection from '@/components/InputSection.vue';
 
 export default defineComponent({
   name: 'Register',
   components: {
     BrandBanner,
+    SystemMessage,
     ContentTile,
-    InputSection,
   },
   setup() {
     const router = useRouter();
@@ -96,14 +81,14 @@ export default defineComponent({
           errorMsg.value = `Error: ${error.message}`;
           setTimeout(() => {
             errorMsg.value = undefined;
-          }, 3000);
+          }, 5000);
         }
         return;
       }
       errorMsg.value = 'Error: Passwords do not match';
       setTimeout(() => {
         errorMsg.value = undefined;
-      }, 3000);
+      }, 5000);
     };
 
     return { email, password, confirmPassword, errorMsg, register };
@@ -126,14 +111,14 @@ export default defineComponent({
   display: grid;
 }
 
-.input-section .btn-bar {
+.btn-bar {
   margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.input-section .btn-bar .btn {
+.btn-bar .btn {
   border: none;
   background: var(--dark-bg);
   border-radius: 5px;
@@ -149,13 +134,7 @@ input:focus {
   border-color: var(--bg-dark);
 }
 
-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 0.5rem;
-}
-
-footer a {
+a {
   text-decoration: none;
   color: var(--accent-violet);
 }
