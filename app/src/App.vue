@@ -50,12 +50,19 @@ export default defineComponent({
   --main-bg-color: #222736;
   --main-font-color: #f3f3f3;
   --icon-color: #555555;
+  --dark-bg: #000;
+  --accent-blue: #2a5dff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: 'Dongle', sans-serif;
   margin: 0;
-  padding: 5px;
+  padding: 0;
   box-sizing: border-box;
   background: var(--main-bg-color);
   color: var(--main-font-color);

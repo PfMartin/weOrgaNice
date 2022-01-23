@@ -44,7 +44,7 @@ const router = createRouter({
 
 // Change document titles
 router.beforeEach((to) => {
-  document.title = `${to.meta.title} | weOrgaNice`;
+  document.title = `${to.meta.title} | WeOrgaNice`;
 });
 
 // Route guard for auth routes
