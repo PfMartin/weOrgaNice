@@ -19,6 +19,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+
     const user: ComputedRef<string | null> = computed((): string | null => {
       return store.getters.user;
     });
@@ -30,13 +31,9 @@ export default defineComponent({
     }
 
     supabase.auth.onAuthStateChange((_, session: any) => {
-      console.log('authStateChange');
-      console.log(session);
       store.dispatch('setUser', session);
       appReady.value = true;
     });
-
-    console.log(appReady.value);
 
     return {
       appReady,
