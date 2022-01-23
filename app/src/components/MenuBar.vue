@@ -9,7 +9,7 @@
         size="large"
         class="notifications-icon"
       ></ion-icon>
-      <img class="usr-img" alt="user" src="@/assets/user.png" />
+      <img @click="logout" class="usr-img" alt="user" src="@/assets/user.png" />
     </div>
   </div>
 </template>
@@ -17,6 +17,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import Fries from '@/components/Fries.vue';
+import { supabase } from '../supabase/init';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'MenuBar',
@@ -24,6 +26,14 @@ export default defineComponent({
     Fries,
   },
   setup() {
+    const router = useRouter();
+
+    const logout = async (): Promise<void> => {
+      console.log('logout');
+      await supabase.auth.signOut();
+      router.push({ name: 'Login' });
+    };
+
     const isMenuOpen = ref<boolean>(false);
 
     const toggleMenu = (): void => {
@@ -33,6 +43,7 @@ export default defineComponent({
     return {
       isMenuOpen,
       toggleMenu,
+      logout,
     };
   },
 });

@@ -1,5 +1,6 @@
 export default {
-  setUser(context: any, newUser: string | null): void {
-    context.commit('setUser', newUser);
+  setUser(context: any, payload: any | null): void {
+    const user: any | null = payload ? payload.user : null;
+    context.commit('setUser', user);
   },
 };

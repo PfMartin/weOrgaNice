@@ -1,11 +1,12 @@
 <template>
-  <menu-bar></menu-bar>
-  <router-view></router-view>
-  <h1>{{ user }}</h1>
+  <div v-if="appReady" class="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed, ComputedRef } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { supabase } from './supabase/init';
 
@@ -17,31 +18,28 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    store.dispatch('setUser', supabase.auth.user());
+    const router = useRouter();
     const user: ComputedRef<string | null> = computed((): string | null => {
-      console.log(store.getters.user);
       return store.getters.user;
     });
 
-    const getCategories = async () => {
-      try {
-        const appReady = ref(null);
+    const appReady = ref<boolean>(false);
 
-        // const { data: category, error } = await supabase
-        //   .from('category')
-        //   .select('id');
-        //
-        // if (error) {
-        //   throw error;
-        // }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    if (!user.value) {
+      appReady.value = true;
+    }
 
-    getCategories();
+    supabase.auth.onAuthStateChange((_, session: any) => {
+      console.log('authStateChange');
+      console.log(session);
+      store.dispatch('setUser', session);
+      appReady.value = true;
+    });
+
+    console.log(appReady.value);
 
     return {
+      appReady,
       user,
     };
   },
