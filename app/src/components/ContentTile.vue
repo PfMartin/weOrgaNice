@@ -1,5 +1,7 @@
 <template lang="html">
-  <div class="container"><slot name="default"></slot></div>
+  <div class="container">
+    <slot name="default"></slot>
+  </div>
 </template>
 
 <script>
@@ -15,5 +17,16 @@ export default defineComponent({
   background: var(--dark-bg);
   padding: 0 1rem;
   border-radius: 7px;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+}
+
+footer a {
+  text-decoration: none;
+  color: var(--accent-blue);
 }
 </style>

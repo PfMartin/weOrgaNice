@@ -2,34 +2,42 @@
   <brand-banner></brand-banner>
   <content-tile>
     <template v-slot:default>
-      <!-- Error Handling -->
-      <div v-if="errorMsg" class="error-msg">
-        <p>{{ errorMsg }}</p>
-      </div>
-
       <!-- Login -->
       <form @submit.prevent="login">
         <h1>Login</h1>
 
-        <div class="input-section">
-          <div class="input-element">
-            <label for="email">Email</label>
-            <input type="email" required class="" id="email" v-model="email" />
-          </div>
-          <div class="input-element">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              required
-              class=""
-              id="password"
-              v-model="password"
-            />
-          </div>
-          <div class="btn-bar">
-            <button type="submit" class="btn">Login</button>
-          </div>
+        <!-- Error Handling -->
+        <div v-if="errorMsg" class="error-msg">
+          <p>{{ errorMsg }}</p>
         </div>
+
+        <input-section>
+          <template v-slot:default>
+            <div class="input-element">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                required
+                class=""
+                id="email"
+                v-model="email"
+              />
+            </div>
+            <div class="input-element">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                required
+                class=""
+                id="password"
+                v-model="password"
+              />
+            </div>
+            <div class="btn-bar">
+              <button type="submit" class="btn">Login</button>
+            </div>
+          </template>
+        </input-section>
         <footer class="">
           <p>
             Don't have an account?
@@ -48,12 +56,14 @@ import { useRouter } from 'vue-router';
 
 import BrandBanner from '@/components/BrandBanner.vue';
 import ContentTile from '@/components/ContentTile.vue';
+import InputSection from '@/components/InputSection.vue';
 
 export default defineComponent({
   name: 'Login',
   components: {
     BrandBanner,
     ContentTile,
+    InputSection,
   },
   setup() {
     const router = useRouter();
@@ -95,29 +105,12 @@ export default defineComponent({
   border-radius: 5px;
 }
 
-.input-section {
-  background: var(--accent-blue);
-  padding: 1rem;
-  border-radius: 7px;
-}
-
-.input-section .input-element {
+.input-element {
   display: grid;
-  margin-bottom: 1rem;
-}
-
-.input-section .input-element input {
-  padding: 0.25rem;
-  border-radius: 5px;
-  border: 2px solid var(--accent-blue);
-  outline: none;
-}
-
-.input-section .input-element input:focus {
-  border: 2px solid var(--dark-bg);
 }
 
 .input-section .btn-bar {
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -129,6 +122,14 @@ export default defineComponent({
   border-radius: 5px;
   color: var(--main-font-color);
   padding: 0.5rem 1rem;
+}
+
+input {
+  border: 2px solid var(--accent-blue);
+}
+
+input:focus {
+  border-color: var(--bg-dark);
 }
 
 footer {

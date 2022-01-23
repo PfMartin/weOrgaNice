@@ -52,6 +52,7 @@ export default defineComponent({
   --icon-color: #555555;
   --dark-bg: #000;
   --accent-blue: #2a5dff;
+  --accent-violet: #7264e4;
 }
 
 * {
@@ -66,5 +67,12 @@ body {
   box-sizing: border-box;
   background: var(--main-bg-color);
   color: var(--main-font-color);
+}
+
+input {
+  padding: 0.25rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
 }
 </style>
