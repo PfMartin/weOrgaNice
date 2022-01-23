@@ -1,4 +1,5 @@
 <template>
+  <brand-banner></brand-banner>
   <!-- Error Handling -->
   <div v-if="errorMsg" class="error-msg">
     <p>{{ errorMsg }}</p>
@@ -34,8 +35,13 @@ import { defineComponent, ref } from 'vue';
 import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
 
+import BrandBanner from '@/components/BrandBanner.vue';
+
 export default defineComponent({
   name: 'Login',
+  components: {
+    BrandBanner,
+  },
   setup() {
     const router = useRouter();
 
