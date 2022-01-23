@@ -1,6 +1,5 @@
 <template>
   <brand-banner />
-  <system-message v-if="errorMsg" :msg="errorMsg" />
   <form @submit.prevent="login">
     <content-tile headline="Login">
       <template v-slot:default>
@@ -19,6 +18,9 @@
           />
         </div>
         <div class="btn-bar">
+          <div class="error-message">
+            <p v-if="errorMsg">{{ errorMsg }}</p>
+          </div>
           <button type="submit" class="btn">Login</button>
         </div>
       </template>
@@ -39,14 +41,12 @@ import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
 
 import BrandBanner from '@/components/BrandBanner.vue';
-import SystemMessage from '@/components/SystemMessage.vue';
 import ContentTile from '@/components/ContentTile.vue';
 
 export default defineComponent({
   name: 'Login',
   components: {
     BrandBanner,
-    SystemMessage,
     ContentTile,
   },
   setup() {
@@ -98,7 +98,7 @@ export default defineComponent({
   margin-top: 1rem;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .btn-bar .btn {
