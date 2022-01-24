@@ -48,7 +48,6 @@ export default defineComponent({
 
 <style lang="css" scoped>
 .container {
-  margin: 1rem;
   background: var(--dark-bg);
   padding: 0 1rem;
   border-radius: 7px;

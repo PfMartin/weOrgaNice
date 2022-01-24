@@ -63,7 +63,7 @@ export default defineComponent({
 
 body {
   font-family: 'Dongle', sans-serif;
-  margin: 0;
+  margin: 1rem;
   padding: 0;
   box-sizing: border-box;
   background: var(--main-bg-color);
