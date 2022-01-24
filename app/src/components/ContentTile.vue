@@ -2,7 +2,7 @@
   <div class="container">
     <h1>{{ headline }}</h1>
 
-    <div :class="[cardClass, backgroundClass]">
+    <div v-if="hasCard" :class="[cardClass, backgroundClass]">
       <slot name="default"></slot>
     </div>
     <footer>
@@ -24,6 +24,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: 'blue',
+    },
+    hasCard: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   setup(props) {

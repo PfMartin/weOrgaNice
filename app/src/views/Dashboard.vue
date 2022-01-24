@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard">
     <menu-bar></menu-bar>
-    <h1>This is the dashboard view</h1>
+    <ContentTile headline="ToDos" :hasCard="false"> </ContentTile>
+    <ContentTile headline="Shopping" :hasCard="false"></ContentTile>
   </div>
 </template>
 
@@ -10,14 +11,16 @@ import { defineComponent } from 'vue';
 import MenuBar from '@/components/MenuBar.vue';
 import { useStore } from 'vuex';
 
+import ContentTile from '@/components/ContentTile.vue';
+
 export default defineComponent({
   name: 'Dashboard',
   components: {
     MenuBar,
+    ContentTile,
   },
   setup() {
     const store = useStore();
-    console.log(store.getters.user);
   },
 });
 </script>
