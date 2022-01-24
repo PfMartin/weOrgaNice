@@ -29,7 +29,9 @@
         </div>
         <div class="btn-bar">
           <div class="error-message">
-            <p v-if="errorMsg">{{ errorMsg }}</p>
+            <transition name="fade">
+              <p v-if="errorMsg">{{ errorMsg }}</p>
+            </transition>
           </div>
           <button type="submit" class="btn">Register</button>
         </div>
@@ -95,16 +97,6 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
-.error-msg {
-  display: flex;
-  color: red;
-  width: 100%;
-  border: 1px solid red;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-}
-
 .input-element {
   display: grid;
 }

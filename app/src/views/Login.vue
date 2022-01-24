@@ -18,8 +18,10 @@
           />
         </div>
         <div class="btn-bar">
-          <div class="error-message">
-            <p v-if="errorMsg">{{ errorMsg }}</p>
+          <div class="error-msg">
+            <transition name="fade">
+              <p v-if="errorMsg">{{ errorMsg }}</p>
+            </transition>
           </div>
           <button type="submit" class="btn">Login</button>
         </div>
@@ -57,7 +59,6 @@ export default defineComponent({
     const errorMsg = ref<ReactiveString>(undefined);
 
     const login = async (): Promise<void> => {
-      console.log('loggin in');
       try {
         const { error } = await supabase.auth.signIn({
           email: email.value,
@@ -80,16 +81,6 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
-.error-msg {
-  display: flex;
-  color: red;
-  width: 100%;
-  border: 1px solid red;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-}
-
 .input-element {
   display: grid;
 }

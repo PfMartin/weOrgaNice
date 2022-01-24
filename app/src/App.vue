@@ -53,6 +53,7 @@ export default defineComponent({
   --dark-bg: #000;
   --accent-blue: #2a5dff;
   --accent-violet: #7264e4;
+  --accent-yellow: #ffc812;
 }
 
 * {
@@ -74,5 +75,16 @@ input {
   border-radius: 5px;
   border: none;
   outline: none;
+}
+
+/* Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
