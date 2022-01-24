@@ -1,5 +1,5 @@
 export default {
-  setUser(state: any, newUser: null | string): void {
+  setUser(state: any, newUser: User | null): void {
     state.user = newUser;
   },
 };

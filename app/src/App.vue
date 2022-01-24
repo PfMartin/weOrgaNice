@@ -31,6 +31,7 @@ export default defineComponent({
     }
 
     supabase.auth.onAuthStateChange((_, session: any) => {
+      console.log(session);
       store.dispatch('setUser', session);
       appReady.value = true;
     });

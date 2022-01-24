@@ -48,7 +48,7 @@ router.beforeEach((to) => {
 });
 
 // Route guard for auth routes
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const user: any = supabase.auth.user();
   if (to.matched.some((res) => res.meta.auth)) {
     if (user) {
