@@ -24,6 +24,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: 'Login',
       auth: false,
+      transition: 'slide-right',
     },
   },
   {
@@ -33,6 +34,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: 'Register',
       auth: false,
+      transition: 'slide-left',
     },
   },
 ];

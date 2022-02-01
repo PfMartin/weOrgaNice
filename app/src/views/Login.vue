@@ -1,40 +1,41 @@
 <template>
-  <brand-banner />
-  <form @submit.prevent="login">
-    <content-tile headline="Login">
-      <template v-slot:default>
-        <div class="input-element">
-          <label for="email">Email</label>
-          <input type="email" required class="" id="email" v-model="email" />
-        </div>
-        <div class="input-element">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            required
-            class=""
-            id="password"
-            v-model="password"
-          />
-        </div>
-        <div class="btn-bar">
-          <div class="error-msg">
-            <transition name="fade">
-              <p v-if="errorMsg">{{ errorMsg }}</p>
-            </transition>
+  <div class="login">
+    <form @submit.prevent="login">
+      <content-tile headline="Login">
+        <template v-slot:default>
+          <div class="input-element">
+            <label for="email">Email</label>
+            <input type="email" required class="" id="email" v-model="email" />
           </div>
-          <button type="submit" class="btn">Login</button>
-        </div>
-      </template>
+          <div class="input-element">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              required
+              class=""
+              id="password"
+              v-model="password"
+            />
+          </div>
+          <div class="btn-bar">
+            <div class="error-msg">
+              <transition name="fade">
+                <p v-if="errorMsg">{{ errorMsg }}</p>
+              </transition>
+            </div>
+            <button type="submit" class="btn">Login</button>
+          </div>
+        </template>
 
-      <template v-slot:footer>
-        <p>
-          Don't have an account?
-          <router-link :to="{ name: 'Register' }">Register</router-link>
-        </p>
-      </template>
-    </content-tile>
-  </form>
+        <template v-slot:footer>
+          <p>
+            Don't have an account?
+            <router-link :to="{ name: 'Register' }">Register</router-link>
+          </p>
+        </template>
+      </content-tile>
+    </form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -42,13 +43,11 @@ import { defineComponent, ref } from 'vue';
 import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
 
-import BrandBanner from '@/components/BrandBanner.vue';
 import ContentTile from '@/components/ContentTile.vue';
 
 export default defineComponent({
   name: 'Login',
   components: {
-    BrandBanner,
     ContentTile,
   },
   setup() {

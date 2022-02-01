@@ -1,6 +1,11 @@
 <template>
   <div v-if="appReady" class="app">
-    <router-view></router-view>
+    <router-view v-slot="{ Component, route }">
+      <brand-banner v-if="!user" />
+      <transition :name="route.meta.transition" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -11,16 +16,19 @@ import { useStore } from 'vuex';
 import { supabase } from './supabase/init';
 
 import MenuBar from '@/components/MenuBar.vue';
+import BrandBanner from '@/components/BrandBanner.vue';
 
 export default defineComponent({
   components: {
     MenuBar,
+    BrandBanner,
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
     const user: ComputedRef<string | null> = computed((): string | null => {
+      console.log(store.getters.user);
       return store.getters.user;
     });
 
@@ -31,7 +39,6 @@ export default defineComponent({
     }
 
     supabase.auth.onAuthStateChange((_, session: any) => {
-      console.log(session);
       store.dispatch('setUser', session);
       appReady.value = true;
     });
@@ -87,5 +94,32 @@ input {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.slide-left-leave-to,
+.slide-right-enter-from {
+  transform: translateX(-105%);
+}
+
+.slide-left-leave-from,
+.slide-left-enter-to,
+.slide-right-leave-from,
+.slide-right-enter-to {
+  transform: translateX(0);
+}
+
+.slide-left-enter-active,
+.slide-right-enter-active {
+  transition: 0.2s ease-out;
+}
+
+.slide-left-enter-from,
+.slide-right-leave-to {
+  transform: translateX(105%);
+}
+
+.slide-left-leave-active,
+.slide-right-leave-active {
+  transition: 0.2s ease-out;
 }
 </style>
