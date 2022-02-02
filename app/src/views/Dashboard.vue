@@ -1,7 +1,18 @@
 <template>
   <div class="dashboard">
-    <ContentTile headline="ToDos" :hasCard="false"> </ContentTile>
-    <ContentTile headline="Shopping" :hasCard="false"></ContentTile>
+    <ContentTile
+      headline="ToDos"
+      :hasCard="false"
+      :hasCreateButton="true"
+      createLink="create-todo"
+    >
+    </ContentTile>
+    <ContentTile
+      headline="Shopping"
+      :hasCard="false"
+      :hasCreateButton="true"
+      createLink="create-shopping"
+    ></ContentTile>
   </div>
 </template>
 

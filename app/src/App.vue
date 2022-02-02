@@ -52,7 +52,7 @@ export default defineComponent({
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400;1,500;1,600&display=swap');
 
 :root {
   --main-bg-color: #222736;
@@ -67,10 +67,10 @@ export default defineComponent({
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Nunito', sans-serif;
 }
 
 body {
-  font-family: 'Dongle', sans-serif;
   margin: 1rem;
   padding: 0;
   box-sizing: border-box;
@@ -83,6 +83,42 @@ input {
   border-radius: 5px;
   border: none;
   outline: none;
+  border: 2px solid var(--accent-blue);
+}
+
+input:focus {
+  border-color: var(--bg-dark);
+}
+
+textarea {
+  padding: 0.25rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  border: 2px solid var(--accent-blue);
+}
+
+textarea:focus {
+  border-color: var(--bg-dark);
+}
+
+.input-element {
+  display: grid;
+}
+
+.btn-bar {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-bar .btn {
+  border: none;
+  background: var(--dark-bg);
+  border-radius: 5px;
+  color: var(--main-font-color);
+  padding: 0.5rem 1rem;
 }
 
 /* Transitions */

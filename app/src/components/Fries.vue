@@ -46,7 +46,7 @@ export default defineComponent({
 .fries::before,
 .fries::after {
   display: block;
-  background-color: #fff;
+  background-color: var(--icon-color);
   position: absolute;
   height: 4px;
   /* transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1); */

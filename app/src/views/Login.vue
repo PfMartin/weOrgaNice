@@ -80,33 +80,6 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
-.input-element {
-  display: grid;
-}
-
-.btn-bar {
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.btn-bar .btn {
-  border: none;
-  background: var(--dark-bg);
-  border-radius: 5px;
-  color: var(--main-font-color);
-  padding: 0.5rem 1rem;
-}
-
-input {
-  border: 2px solid var(--accent-blue);
-}
-
-input:focus {
-  border-color: var(--bg-dark);
-}
-
 a {
   text-decoration: none;
   color: var(--accent-blue);

@@ -8,7 +8,7 @@
         name="notifications-outline"
         size="large"
         class="notifications-icon"
-      ></ion-icon>
+      />
       <img @click="logout" class="usr-img" alt="user" src="@/assets/user.png" />
     </div>
   </div>

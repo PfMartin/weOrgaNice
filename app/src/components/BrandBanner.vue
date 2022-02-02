@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="brand-banner">
     <ion-icon name="journal" size="large" class="journal-icon"></ion-icon>
-    <h1>We<span>Orga</span>Nice</h1>
+    <h2>We<span>Orga</span>Nice</h2>
   </div>
 </template>
 

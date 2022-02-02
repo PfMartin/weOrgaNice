@@ -1,6 +1,11 @@
 <template lang="html">
   <div class="container">
-    <h1>{{ headline }}</h1>
+    <header>
+      <h2>{{ headline }}</h2>
+      <router-link v-if="hasCreateButton" :to="createLink">
+        <ion-icon name="add" size="small" />
+      </router-link>
+    </header>
 
     <div v-if="hasCard" :class="[cardClass, backgroundClass]">
       <slot name="default"></slot>
@@ -30,6 +35,16 @@ export default defineComponent({
       required: false,
       default: true,
     },
+    hasCreateButton: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    createLink: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
   setup(props) {
     const backgroundClass: ComputedRef<string> = computed((): string => {
@@ -56,6 +71,17 @@ export default defineComponent({
   background: var(--dark-bg);
   padding: 0 1rem;
   border-radius: 7px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--icon-color);
+}
+
+header a {
+  color: var(--icon-color);
 }
 
 .card {
