@@ -1,21 +1,43 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Login from '../views/Login.vue';
-import Register from '../views/Register.vue';
-import { supabase } from '../supabase/init';
+import { supabase } from '@/supabase/init';
+import Register from '@/views/Register.vue';
+import Login from '@/views/Login.vue';
+import Home from '@/views/Home.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Dashboard',
+    name: 'Home',
     meta: {
-      title: 'Dashboard',
+      title: 'Home',
       auth: true,
     },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Dashboard.vue'),
+    component: Home,
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        meta: {
+          title: 'Dashboard',
+          auth: true,
+        },
+        component: () =>
+          import(/* webpackChunkName: 'createTodo'*/ '@/views/Dashboard.vue'),
+      },
+      {
+        path: 'create-todo',
+        name: 'CreateTodo',
+        meta: {
+          title: 'CreateTodo',
+          auth: true,
+        },
+        component: () =>
+          import(/* webpackChunkName: 'createTodo'*/ '@/views/CreateTodo.vue'),
+      },
+    ],
   },
   {
     path: '/login',
