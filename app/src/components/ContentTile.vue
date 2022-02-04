@@ -74,6 +74,7 @@ export default defineComponent({
 }
 
 header {
+  padding: 0.5rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -104,6 +105,7 @@ header a {
 footer {
   display: flex;
   justify-content: flex-end;
-  padding-right: 0.5rem;
+  padding: 0.5rem;
+  font-size: 0.8rem;
 }
 </style>
