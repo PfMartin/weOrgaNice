@@ -48,12 +48,18 @@ export default defineComponent({
   },
   setup(props) {
     const backgroundClass: ComputedRef<string> = computed((): string => {
-      if (props.bgColor === 'violet') {
-        return 'bg-violet';
-      } else if (props.bgColor === 'grey') {
-        return 'bg-grey';
+      switch (props.bgColor) {
+        case 'teal':
+          return 'bg-teal';
+        case 'violet':
+          return 'bg-violet';
+        case 'yellow':
+          return 'bg-yellow';
+        case 'grey':
+          return 'bg-grey';
+        default:
+          return 'bg-blue';
       }
-      return 'bg-blue';
     });
 
     const cardClass: string = 'card';
@@ -94,8 +100,16 @@ header a {
   background: var(--accent-blue);
 }
 
+.bg-teal {
+  background: var(--accent-teal);
+}
+
 .bg-violet {
   background: var(--accent-violet);
+}
+
+.bg-yellow {
+  background: var(--accent-yellow);
 }
 
 .bg-grey {

@@ -4,12 +4,13 @@
       <Fries :isMenuOpen="isMenuOpen" @toggle-menu="toggleMenu" />
     </div>
     <div class="features-container">
+      <ion-icon name="notifications-outline" size="large" class="icon" />
       <ion-icon
-        name="notifications-outline"
+        @click="logout"
+        name="person-outline"
         size="large"
-        class="notifications-icon"
+        class="icon"
       />
-      <img @click="logout" class="usr-img" alt="user" src="@/assets/user.png" />
     </div>
   </div>
 </template>
@@ -62,7 +63,7 @@ export default defineComponent({
   align-items: center;
 }
 
-.notifications-icon {
+.icon {
   color: var(--icon-color);
   margin-right: 10px;
 }

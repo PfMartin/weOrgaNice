@@ -60,6 +60,7 @@ export default defineComponent({
   --icon-color: #555555;
   --dark-bg: #000;
   --accent-blue: #2a5dff;
+  --accent-teal: #2bc8d7;
   --accent-violet: #7264e4;
   --accent-yellow: #ffc812;
 }
@@ -83,7 +84,7 @@ input {
   border-radius: 5px;
   border: none;
   outline: none;
-  border: 2px solid var(--accent-blue);
+  border: 2px solid #fff;
 }
 
 input:focus {
@@ -95,7 +96,7 @@ textarea {
   border-radius: 5px;
   border: none;
   outline: none;
-  border: 2px solid var(--accent-blue);
+  border: 2px solid #fff;
 }
 
 textarea:focus {
