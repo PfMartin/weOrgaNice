@@ -34,7 +34,8 @@
               class="dropdown-btn"
               :class="{ 'is-active': isDropdown }"
             >
-              Category
+              <p>Category</p>
+              <ion-icon name="caret-down-outline"></ion-icon>
             </button>
             <ul class="dropdown-content" :class="{ 'is-block': isDropdown }">
               <li @mousedown="selectCategory">General</li>
@@ -109,6 +110,9 @@ form {
 }
 
 .dropdown-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 2px;
   background: #fff;
   border: 2px solid #fff;
