@@ -16,13 +16,13 @@
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name = 'ColorInput',
+  name: 'ColorInput',
   emits: ['set-color'],
   setup(props, { emit }) {
     const colors = ['blue', 'teal', 'violet', 'yellow'];
     let activeColor = ref<string>('blue');
 
-    const setColor = (color) => {
+    const setColor = (color: string) => {
       activeColor.value = color;
       emit('set-color', color);
     };

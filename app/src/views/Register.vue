@@ -1,5 +1,6 @@
 <template>
   <div class="register">
+    <brand-banner color="violet" />
     <form @submit.prevent="register" class="">
       <content-tile headline="Register" bgColor="violet">
         <template v-slot:default>
@@ -52,11 +53,13 @@ import { defineComponent, ref } from 'vue';
 import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
 
+import BrandBanner from '@/components/BrandBanner.vue';
 import ContentTile from '@/components/ContentTile.vue';
 
 export default defineComponent({
   name: 'Register',
   components: {
+    BrandBanner,
     ContentTile,
   },
   setup() {

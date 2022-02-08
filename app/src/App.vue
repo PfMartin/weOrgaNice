@@ -1,7 +1,6 @@
 <template>
   <div v-if="appReady" class="app">
     <router-view v-slot="{ Component, route }">
-      <brand-banner v-if="!user" />
       <transition :name="route.meta.transition" mode="out-in">
         <component :is="Component" />
       </transition>
@@ -16,12 +15,10 @@ import { useStore } from 'vuex';
 import { supabase } from './supabase/init';
 
 import MenuBar from '@/components/MenuBar.vue';
-import BrandBanner from '@/components/BrandBanner.vue';
 
 export default defineComponent({
   components: {
     MenuBar,
-    BrandBanner,
   },
   setup() {
     const store = useStore();
@@ -101,6 +98,12 @@ textarea {
 
 textarea:focus {
   border-color: var(--bg-dark);
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  font: inherit;
 }
 
 .input-element {

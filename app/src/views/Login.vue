@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <brand-banner />
     <form @submit.prevent="login">
       <content-tile headline="Login">
         <template v-slot:default>
@@ -43,11 +44,13 @@ import { defineComponent, ref } from 'vue';
 import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
 
+import BrandBanner from '@/components/BrandBanner.vue';
 import ContentTile from '@/components/ContentTile.vue';
 
 export default defineComponent({
   name: 'Login',
   components: {
+    BrandBanner,
     ContentTile,
   },
   setup() {

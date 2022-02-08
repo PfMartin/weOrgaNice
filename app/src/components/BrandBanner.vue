@@ -1,7 +1,12 @@
 <template lang="html">
   <div class="brand-banner">
-    <ion-icon name="journal" size="large" class="journal-icon"></ion-icon>
-    <h2>We<span>Orga</span>Nice</h2>
+    <ion-icon
+      name="journal"
+      size="large"
+      class="journal-icon"
+      :class="color"
+    ></ion-icon>
+    <h2>We<span :class="color">Orga</span>Nice</h2>
   </div>
 </template>
 
@@ -9,6 +14,13 @@
 import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'BrandBanner',
+  props: {
+    color: {
+      type: String,
+      required: false,
+      default: 'blue',
+    },
+  },
 });
 </script>
 
@@ -21,11 +33,14 @@ export default defineComponent({
 }
 
 .brand-banner .journal-icon {
-  color: var(--accent-blue);
   margin-right: 1rem;
 }
 
-.brand-banner span {
+.blue {
   color: var(--accent-blue);
+}
+
+.violet {
+  color: var(--accent-violet);
 }
 </style>
