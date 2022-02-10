@@ -1,14 +1,45 @@
 <template lang="html">
-  <content-tile headline="Create Todo" :bgColor="categoryColor">
+  <content-tile headline="Create Todo" :bgColor="selectedCategory.color">
     <template v-slot:default>
       <form>
-        <div class="input-element">
+        <!-- <div class="input-element">
           <label>Color</label>
           <color-input @set-color="setColor" />
-        </div>
+        </div> -->
         <div class="input-element">
           <label for="title">Title</label>
           <input type="text" required class="" id="title" v-model="title" />
+        </div>
+        <div class="input-element">
+          <div class="dropdown">
+            <button
+              @blur="closeDropdown"
+              tabindex="0"
+              type="button"
+              @click="toggleDropdown"
+              class="dropdown-btn"
+              :class="{ 'is-active': isDropdown }"
+            >
+              <div class="category-value">
+                <div class="color-box" :class="selectedCategory.color"></div>
+                <p>{{ selectedCategory.title }}</p>
+              </div>
+              <ion-icon name="caret-down-outline"></ion-icon>
+            </button>
+            <ul class="dropdown-content" :class="{ 'is-block': isDropdown }">
+              <template v-for="category in CATEGORIES">
+                <li
+                  v-if="selectedCategory.title !== category.title"
+                  @mousedown="selectCategory(category)"
+                >
+                  <div class="category-value">
+                    <div class="color-box" :class="category.color"></div>
+                    <p>{{ category.title }}</p>
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </div>
         </div>
         <div class="input-element">
           <label for="description">Description</label>
@@ -23,26 +54,6 @@
             id="due-date"
             v-model="dueDate"
           />
-        </div>
-        <div class="input-element">
-          <div class="dropdown">
-            <button
-              @blur="closeDropdown"
-              tabindex="0"
-              type="button"
-              @click="toggleDropdown"
-              class="dropdown-btn"
-              :class="{ 'is-active': isDropdown }"
-            >
-              <p>Category</p>
-              <ion-icon name="caret-down-outline"></ion-icon>
-            </button>
-            <ul class="dropdown-content" :class="{ 'is-block': isDropdown }">
-              <li @mousedown="selectCategory">General</li>
-              <li>Home</li>
-              <li>Family</li>
-            </ul>
-          </div>
         </div>
       </form>
     </template>
@@ -64,12 +75,12 @@ export default defineComponent({
     const title = ref<string>('');
     const description = ref<string>('');
     const dueDate = ref<string>('');
-    const categoryColor = ref<string>('blue');
+    const category = ref<CategoryType | undefined>(undefined);
     const isDropdown = ref<boolean>(false);
-
-    const setColor = (color: string) => {
-      categoryColor.value = color;
-    };
+    const selectedCategory = ref<CategoryType>({
+      title: 'Category',
+      color: 'blue',
+    });
 
     const toggleDropdown = () => {
       isDropdown.value = !isDropdown.value;
@@ -79,20 +90,35 @@ export default defineComponent({
       isDropdown.value = false;
     };
 
-    const selectCategory = () => {
-      console.log('selected');
+    const selectCategory = (category: CategoryType) => {
+      selectedCategory.value = category;
     };
+
+    const CATEGORIES = [
+      {
+        title: 'General',
+        color: 'blue',
+      },
+      {
+        title: 'Family',
+        color: 'violet',
+      },
+      {
+        title: 'Home',
+        color: 'teal',
+      },
+    ];
 
     return {
       title,
       description,
       dueDate,
-      setColor,
-      categoryColor,
       toggleDropdown,
       closeDropdown,
       isDropdown,
       selectCategory,
+      selectedCategory,
+      CATEGORIES,
     };
   },
 });
@@ -133,6 +159,39 @@ form {
 
 .is-block {
   display: block;
+}
+
+.category-value {
+  display: flex;
+  align-items: center;
+}
+
+.color-box {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
+button .color-box {
+  border-color: var(--dark-bg);
+}
+
+.blue {
+  background-color: var(--accent-blue);
+}
+
+.violet {
+  background-color: var(--accent-violet);
+}
+
+.teal {
+  background-color: var(--accent-teal);
+}
+
+.yellow {
+  background-color: var(--accent-yellow);
 }
 
 ul {
