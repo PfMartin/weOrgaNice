@@ -18,7 +18,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useStore } from 'vuex';
 
 import ContentTile from '@/components/ContentTile.vue';
 
@@ -26,9 +25,6 @@ export default defineComponent({
   name: 'Dashboard',
   components: {
     ContentTile,
-  },
-  setup() {
-    const store = useStore();
   },
 });
 </script>

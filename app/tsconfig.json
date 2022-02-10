@@ -15,6 +15,7 @@
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
+    "noUnusedLocals": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": ["webpack-env"],

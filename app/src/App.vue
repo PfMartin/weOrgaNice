@@ -9,15 +9,8 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  ComputedRef,
-  watch,
-  onMounted,
-} from 'vue';
-import { useRouter } from 'vue-router';
+import { defineComponent, ref, computed, ComputedRef, onMounted } from 'vue';
+// import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { supabase } from './supabase/init';
 
@@ -29,7 +22,11 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const router = useRouter();
+    // const router = useRouter();
+
+    onMounted(() => {
+      console.log('mounted');
+    });
 
     const user: ComputedRef<string | null> = computed((): string | null => {
       return store.getters.user;

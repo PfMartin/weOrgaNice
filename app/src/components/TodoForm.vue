@@ -75,7 +75,6 @@ export default defineComponent({
     const title = ref<string>('');
     const description = ref<string>('');
     const dueDate = ref<string>('');
-    const category = ref<CategoryType | undefined>(undefined);
     const isDropdown = ref<boolean>(false);
     const selectedCategory = ref<CategoryType>({
       title: 'Category',
