@@ -8,6 +8,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
+    redirect: '/dashboard',
     meta: {
       title: 'Home',
       auth: true,

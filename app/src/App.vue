@@ -9,7 +9,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, ComputedRef } from 'vue';
+import {
+  defineComponent,
+  ref,
+  computed,
+  ComputedRef,
+  watch,
+  onMounted,
+} from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { supabase } from './supabase/init';
@@ -25,17 +32,21 @@ export default defineComponent({
     const router = useRouter();
 
     const user: ComputedRef<string | null> = computed((): string | null => {
-      console.log(store.getters.user);
       return store.getters.user;
     });
 
     const appReady = ref<boolean>(false);
+
+    // watch(user, (newUser) => {
+    //   newUser && router.push({ name: 'Dashboard' });
+    // });
 
     if (!user.value) {
       appReady.value = true;
     }
 
     supabase.auth.onAuthStateChange((_, session: any) => {
+      console.log('state Change');
       store.dispatch('setUser', session);
       appReady.value = true;
     });
