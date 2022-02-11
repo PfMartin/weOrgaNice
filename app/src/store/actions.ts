@@ -3,4 +3,8 @@ export default {
     const user: User | null = payload ? payload.user : null;
     context.commit('setUser', user);
   },
+
+  setCategories(context: any, payload: CategoryType[]): void {
+    context.commit('setCategories', payload);
+  },
 };

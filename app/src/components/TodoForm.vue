@@ -22,19 +22,19 @@
             >
               <div class="category-value">
                 <div class="color-box" :class="selectedCategory.color"></div>
-                <p>{{ selectedCategory.title }}</p>
+                <p>{{ selectedCategory.name }}</p>
               </div>
               <ion-icon name="caret-down-outline"></ion-icon>
             </button>
             <ul class="dropdown-content" :class="{ 'is-block': isDropdown }">
-              <template v-for="category in CATEGORIES">
+              <template v-for="category in categories">
                 <li
-                  v-if="selectedCategory.title !== category.title"
+                  v-if="selectedCategory.name !== category.name"
                   @mousedown="selectCategory(category)"
                 >
                   <div class="category-value">
                     <div class="color-box" :class="category.color"></div>
-                    <p>{{ category.title }}</p>
+                    <p>{{ category.name }}</p>
                   </div>
                 </li>
               </template>
@@ -62,6 +62,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useStore } from 'vuex';
+
 import ContentTile from '@/components/ContentTile.vue';
 import ColorInput from '@/components/ColorInput.vue';
 
@@ -72,14 +74,20 @@ export default defineComponent({
     ColorInput,
   },
   setup() {
+    const store = useStore();
+
     const title = ref<string>('');
     const description = ref<string>('');
     const dueDate = ref<string>('');
     const isDropdown = ref<boolean>(false);
     const selectedCategory = ref<CategoryType>({
-      title: 'Category',
+      name: 'General',
       color: 'blue',
     });
+
+    const categories = ref<CategoryType[]>([]);
+
+    categories.value = store.getters.categories;
 
     const toggleDropdown = () => {
       isDropdown.value = !isDropdown.value;
@@ -93,21 +101,6 @@ export default defineComponent({
       selectedCategory.value = category;
     };
 
-    const CATEGORIES = [
-      {
-        title: 'General',
-        color: 'blue',
-      },
-      {
-        title: 'Family',
-        color: 'violet',
-      },
-      {
-        title: 'Home',
-        color: 'teal',
-      },
-    ];
-
     return {
       title,
       description,
@@ -117,7 +110,7 @@ export default defineComponent({
       isDropdown,
       selectCategory,
       selectedCategory,
-      CATEGORIES,
+      categories,
     };
   },
 });

@@ -24,8 +24,16 @@ export default defineComponent({
     const store = useStore();
     // const router = useRouter();
 
-    onMounted(() => {
-      console.log('mounted');
+    onMounted(async () => {
+      const { data: categories, error } = await supabase
+        .from('category')
+        .select('*');
+
+      if (error) {
+        console.error(error);
+      } else {
+        store.dispatch('setCategories', categories);
+      }
     });
 
     const user: ComputedRef<string | null> = computed((): string | null => {
