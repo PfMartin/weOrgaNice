@@ -4,3 +4,8 @@ interface CategoryType {
   name: string;
   color: string;
 }
+
+interface RepeatingType {
+  name: string;
+  value: number;
+}

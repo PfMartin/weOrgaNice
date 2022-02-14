@@ -42,10 +42,6 @@ export default defineComponent({
 
     const appReady = ref<boolean>(false);
 
-    // watch(user, (newUser) => {
-    //   newUser && router.push({ name: 'Dashboard' });
-    // });
-
     if (!user.value) {
       appReady.value = true;
     }
