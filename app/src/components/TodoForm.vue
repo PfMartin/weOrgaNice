@@ -59,14 +59,11 @@
           />
         </div>
         <div class="input-element">
-          <div class="checkbox" @click="checkIsRepeating">
-            <div
-              id="repeating"
-              class="color-box empty-box"
-              :class="{ 'checked-box': isRepeating }"
-            ></div>
-            <label for="repeating">Repeating Task</label>
-          </div>
+          <check-box
+            id="repeating"
+            label="Repeating Task"
+            @on-check="checkIsRepeating"
+          />
         </div>
         <div class="input-element">
           <div class="inline-element">
@@ -122,18 +119,20 @@
 import { defineComponent, ref, computed, ComputedRef } from 'vue';
 import { useStore } from 'vuex';
 
+import { REPEATING_UNITS } from '@/utils/constants';
+
 import ContentTile from '@/components/ContentTile.vue';
 import ColorInput from '@/components/ColorInput.vue';
+import CheckBox from '@/components/CheckBox.vue';
 
 export default defineComponent({
   name: 'TodoForm',
   components: {
     ContentTile,
     ColorInput,
+    CheckBox,
   },
   setup() {
-    const REPEATING_UNITS = ['hours', 'days', 'months', 'years'];
-
     const store = useStore();
 
     const title = ref<string>('');
@@ -271,19 +270,6 @@ button .color-box {
 
 .yellow {
   background-color: var(--accent-yellow);
-}
-
-.checkbox {
-  display: flex;
-}
-
-.empty-box {
-  background: #fff;
-  border: 2px solid var(--dark-bg);
-}
-
-.checked-box {
-  background: var(--icon-color);
 }
 
 .text-muted {
