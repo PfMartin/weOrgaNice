@@ -72,6 +72,8 @@ export default defineComponent({
   --accent-teal: #2bc8d7;
   --accent-violet: #7264e4;
   --accent-yellow: #ffc812;
+  --text-muted: #b7b7b7;
+  --white: #fff;
 }
 
 * {
@@ -93,11 +95,16 @@ input {
   border-radius: 5px;
   border: none;
   outline: none;
-  border: 2px solid #fff;
+  border: 2px solid var(--white);
 }
 
 input:focus {
   border-color: var(--bg-dark);
+}
+
+input:disabled {
+  background: var(--white);
+  color: var(--text-muted);
 }
 
 textarea {
@@ -105,7 +112,7 @@ textarea {
   border-radius: 5px;
   border: none;
   outline: none;
-  border: 2px solid #fff;
+  border: 2px solid var(--white);
 }
 
 textarea:focus {

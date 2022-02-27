@@ -68,11 +68,17 @@
             <label for="repeating">Repeating Task</label>
           </div>
         </div>
-        <div v-if="isRepeating" class="input-element">
+        <div class="input-element">
           <div class="inline-element">
-            <label for="repeating-days">Every</label>
+            <label for="repeating-days" :class="{ 'text-muted': !isRepeating }"
+              >Every</label
+            >
             <div class="input-part">
-              <input type="number" v-model="selectedRepeating.value" />
+              <input
+                type="number"
+                v-model="selectedRepeating.value"
+                :disabled="!isRepeating"
+              />
               <div class="dropdown">
                 <button
                   @blur="closeRepeatingDropdown"
@@ -81,6 +87,7 @@
                   @click="toggleRepeatingDropdown"
                   class="dropdown-btn"
                   :class="{ 'is-active': isRepeatingDropdown }"
+                  :disabled="!isRepeating"
                 >
                   <div class="category-value">
                     <p>{{ selectedRepeating.name }}</p>
@@ -277,6 +284,10 @@ button .color-box {
 
 .checked-box {
   background: var(--icon-color);
+}
+
+.text-muted {
+  color: var(--text-muted);
 }
 
 .inline-element {
