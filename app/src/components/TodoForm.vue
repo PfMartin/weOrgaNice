@@ -2,47 +2,17 @@
   <content-tile headline="Create Todo" :bgColor="selectedCategory.color">
     <template v-slot:default>
       <form>
-        <!-- <div class="input-element">
-          <label>Color</label>
-          <color-input @set-color="setColor" />
-        </div> -->
         <div class="input-element">
           <label for="title">Title</label>
           <input type="text" required class="" id="title" v-model="title" />
         </div>
         <div class="input-element">
-          <div class="dropdown">
-            <button
-              @blur="closeCategoryDropdown"
-              tabindex="0"
-              type="button"
-              @click="toggleCategoryDropdown"
-              class="dropdown-btn"
-              :class="{ 'is-active': isCategoryDropdown }"
-            >
-              <div class="category-value">
-                <div class="color-box" :class="selectedCategory.color"></div>
-                <p>{{ selectedCategory.name }}</p>
-              </div>
-              <ion-icon name="caret-down-outline"></ion-icon>
-            </button>
-            <ul
-              class="dropdown-content"
-              :class="{ 'is-block': isCategoryDropdown }"
-            >
-              <template v-for="category in categories">
-                <li
-                  v-if="selectedCategory.name !== category.name"
-                  @mousedown="selectCategory(category)"
-                >
-                  <div class="category-value">
-                    <div class="color-box" :class="category.color"></div>
-                    <p>{{ category.name }}</p>
-                  </div>
-                </li>
-              </template>
-            </ul>
-          </div>
+          <dropdown
+            label="Category"
+            :options="categories"
+            :selectedOption="selectedCategory"
+            @on-select-option="selectCategory"
+          />
         </div>
         <div class="input-element">
           <label for="description">Description</label>
@@ -76,37 +46,13 @@
                 v-model="selectedRepeating.value"
                 :disabled="!isRepeating"
               />
-              <div class="dropdown">
-                <button
-                  @blur="closeRepeatingDropdown"
-                  tabindex="0"
-                  type="button"
-                  @click="toggleRepeatingDropdown"
-                  class="dropdown-btn"
-                  :class="{ 'is-active': isRepeatingDropdown }"
-                  :disabled="!isRepeating"
-                >
-                  <div class="category-value">
-                    <p>{{ selectedRepeating.name }}</p>
-                  </div>
-                  <ion-icon name="caret-down-outline"></ion-icon>
-                </button>
-                <ul
-                  class="dropdown-content"
-                  :class="{ 'is-block': isRepeatingDropdown }"
-                >
-                  <template v-for="unit in REPEATING_UNITS">
-                    <li
-                      v-if="selectedRepeating.name !== unit"
-                      @mousedown="selectRepeatingUnit(unit)"
-                    >
-                      <div class="category-value">
-                        <p>{{ unit }}</p>
-                      </div>
-                    </li>
-                  </template>
-                </ul>
-              </div>
+
+              <dropdown
+                :options="REPEATING_UNITS"
+                :selectedOption="selectedRepeating"
+                @on-select-option="selectRepeatingUnit"
+                :isDisabled="!isRepeating"
+              />
             </div>
           </div>
         </div>
@@ -124,6 +70,7 @@ import { REPEATING_UNITS } from '@/utils/constants';
 import ContentTile from '@/components/ContentTile.vue';
 import ColorInput from '@/components/ColorInput.vue';
 import CheckBox from '@/components/CheckBox.vue';
+import Dropdown from '@/components/Dropdown.vue';
 
 export default defineComponent({
   name: 'TodoForm',
@@ -131,6 +78,7 @@ export default defineComponent({
     ContentTile,
     ColorInput,
     CheckBox,
+    Dropdown,
   },
   setup() {
     const store = useStore();
@@ -138,11 +86,6 @@ export default defineComponent({
     const title = ref<string>('');
     const description = ref<string>('');
     const dueDate = ref<string>('');
-    const isCategoryDropdown = ref<boolean>(false);
-    const selectedCategory = ref<CategoryType>({
-      name: 'General',
-      color: 'blue',
-    });
 
     const categories: ComputedRef<CategoryType[]> = computed(
       (): CategoryType[] => {
@@ -150,12 +93,10 @@ export default defineComponent({
       }
     );
 
-    const toggleCategoryDropdown = (): void => {
-      isCategoryDropdown.value = !isCategoryDropdown.value;
-    };
-    const closeCategoryDropdown = (): void => {
-      isCategoryDropdown.value = false;
-    };
+    const selectedCategory = ref<CategoryType>({
+      name: 'General',
+      color: 'blue',
+    });
     const selectCategory = (category: CategoryType): void => {
       selectedCategory.value = category;
     };
@@ -164,37 +105,24 @@ export default defineComponent({
     const checkIsRepeating = (): void => {
       isRepeating.value = !isRepeating.value;
     };
-    const isRepeatingDropdown = ref<boolean>(false);
     const selectedRepeating = ref<RepeatingType>({
       name: 'days',
       value: 7,
     });
-    const toggleRepeatingDropdown = (): void => {
-      isRepeatingDropdown.value = !isRepeatingDropdown.value;
-    };
-    const closeRepeatingDropdown = (): void => {
-      isRepeatingDropdown.value = false;
-    };
-    const selectRepeatingUnit = (unit: string): void => {
-      selectedRepeating.value.name = unit;
+    const selectRepeatingUnit = (unit: Record<string, string>): void => {
+      selectedRepeating.value.name = unit.name;
     };
 
     return {
       title,
       description,
       dueDate,
-      toggleCategoryDropdown,
-      closeCategoryDropdown,
-      isCategoryDropdown,
       selectCategory,
       selectedCategory,
       categories,
       checkIsRepeating,
       REPEATING_UNITS,
       isRepeating,
-      toggleRepeatingDropdown,
-      closeRepeatingDropdown,
-      isRepeatingDropdown,
       selectRepeatingUnit,
       selectedRepeating,
     };
@@ -242,18 +170,6 @@ form {
 .category-value {
   display: flex;
   align-items: center;
-}
-
-.color-box {
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
-  border: 2px solid #fff;
-  border-radius: 5px;
-}
-
-button .color-box {
-  border-color: var(--dark-bg);
 }
 
 .blue {

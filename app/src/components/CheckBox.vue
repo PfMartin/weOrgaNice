@@ -18,7 +18,6 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { id, label } = props;
-    // const { id, label } = toRefs(props);
 
     const isChecked = ref<boolean>(false);
 

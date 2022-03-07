@@ -1,1 +1,14 @@
-export const REPEATING_UNITS = ['hours', 'days', 'months', 'years'];
+export const REPEATING_UNITS = [
+  {
+    name: 'hours',
+  },
+  {
+    name: 'days',
+  },
+  {
+    name: 'months',
+  },
+  {
+    name: 'years',
+  },
+];
