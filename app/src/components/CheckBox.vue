@@ -1,10 +1,8 @@
 <template lang="html">
   <div class="checkbox-container" @click="onCheck">
-    <div
-      :id="id"
-      class="checkbox"
-      :class="{ 'checked-box': isChecked, 'unchecked-box': !isChecked }"
-    ></div>
+    <div :id="id" class="checkbox">
+      <div class="inner-box" :class="{ 'checked-box': isChecked }"></div>
+    </div>
     <label :for="id">{{ label }}</label>
   </div>
 </template>
@@ -48,16 +46,21 @@ export default defineComponent({
   width: 15px;
   height: 15px;
   margin-right: 5px;
-  border: 2px solid #fff;
   border-radius: 5px;
+  background: #fff;
+  border: 2px solid var(--dark-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inner-box {
+  border-radius: 2px;
+  width: 11px;
+  height: 11px;
 }
 
 .checked-box {
   background: var(--icon-color);
-}
-
-.unchecked-box {
-  background: #fff;
-  border: 2px solid var(--dark-bg);
 }
 </style>
