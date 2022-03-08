@@ -2,6 +2,7 @@ import { createStore } from 'vuex';
 import mutations from './mutations';
 import actions from './actions';
 import getters from './getters';
+import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
   state: {
@@ -12,4 +13,5 @@ export default createStore({
   actions,
   getters,
   modules: {},
+  plugins: [createPersistedState()],
 });

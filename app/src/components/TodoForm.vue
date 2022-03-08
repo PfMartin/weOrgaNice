@@ -92,31 +92,28 @@ export default defineComponent({
 
     const categories: ComputedRef<CategoryType[]> = computed(
       (): CategoryType[] => {
-        console.log(store.getters.categories);
         return store.getters.categories;
       }
     );
 
-    const selectedCategory = ref<CategoryType>();
+    const selectedCategory = ref<CategoryType>({
+      id: 0,
+      name: 'Select a category',
+      color: 'blue',
+      default: false,
+    });
 
-    const getInitialValues = () => {
+    const setInitialValues = () => {
       const defaultCategory = categories.value.find(
-        (category) => category.default === true
+        (category: CategoryType) => category.default === true
       );
 
       if (defaultCategory) {
         selectedCategory.value = defaultCategory;
-      } else {
-        selectedCategory.value = {
-          id: 1,
-          name: 'Not found',
-          color: 'blue',
-          default: false,
-        };
       }
     };
 
-    getInitialValues();
+    setInitialValues();
 
     const selectCategory = (category: CategoryType): void => {
       selectedCategory.value = category;
@@ -136,7 +133,7 @@ export default defineComponent({
 
     const submitTodo = (): void => {
       console.log(title.value);
-      selectedCategory.value && console.log(selectedCategory.value.name);
+      console.log(selectedCategory.value.name);
       console.log(dueDate.value);
 
       console.log(selectedRepeating.value);
