@@ -1,7 +1,7 @@
 <template lang="html">
   <content-tile headline="Create Todo" :bgColor="selectedCategory.color">
     <template v-slot:default>
-      <form>
+      <form @submit.prevent>
         <div class="input-element">
           <label for="title">Title</label>
           <input type="text" required class="" id="title" v-model="title" />
@@ -56,6 +56,7 @@
             </div>
           </div>
         </div>
+        <submit-button text="Submit" @submit="submitTodo" />
       </form>
     </template>
   </content-tile>
@@ -71,6 +72,7 @@ import ContentTile from '@/components/ContentTile.vue';
 import ColorInput from '@/components/ColorInput.vue';
 import CheckBox from '@/components/CheckBox.vue';
 import Dropdown from '@/components/Dropdown.vue';
+import SubmitButton from '@/components/SubmitButton.vue';
 
 export default defineComponent({
   name: 'TodoForm',
@@ -79,6 +81,7 @@ export default defineComponent({
     ColorInput,
     CheckBox,
     Dropdown,
+    SubmitButton,
   },
   setup() {
     const store = useStore();
@@ -89,14 +92,32 @@ export default defineComponent({
 
     const categories: ComputedRef<CategoryType[]> = computed(
       (): CategoryType[] => {
+        console.log(store.getters.categories);
         return store.getters.categories;
       }
     );
 
-    const selectedCategory = ref<CategoryType>({
-      name: 'General',
-      color: 'blue',
-    });
+    const selectedCategory = ref<CategoryType>();
+
+    const getInitialValues = () => {
+      const defaultCategory = categories.value.find(
+        (category) => category.default === true
+      );
+
+      if (defaultCategory) {
+        selectedCategory.value = defaultCategory;
+      } else {
+        selectedCategory.value = {
+          id: 1,
+          name: 'Not found',
+          color: 'blue',
+          default: false,
+        };
+      }
+    };
+
+    getInitialValues();
+
     const selectCategory = (category: CategoryType): void => {
       selectedCategory.value = category;
     };
@@ -113,6 +134,19 @@ export default defineComponent({
       selectedRepeating.value.name = unit.name;
     };
 
+    const submitTodo = (): void => {
+      console.log(title.value);
+      selectedCategory.value && console.log(selectedCategory.value.name);
+      console.log(dueDate.value);
+
+      console.log(selectedRepeating.value);
+
+      // const todo = {
+      //   title: title.value,
+      //   category: selectedCategory.value.name,
+      // };
+    };
+
     return {
       title,
       description,
@@ -120,11 +154,12 @@ export default defineComponent({
       selectCategory,
       selectedCategory,
       categories,
-      checkIsRepeating,
-      REPEATING_UNITS,
       isRepeating,
+      checkIsRepeating,
       selectRepeatingUnit,
       selectedRepeating,
+      REPEATING_UNITS,
+      submitTodo,
     };
   },
 });
@@ -134,42 +169,6 @@ export default defineComponent({
 form {
   display: grid;
   grid-gap: 1rem;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-btn {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2px;
-  background: #fff;
-  border: 2px solid #fff;
-  border-radius: 5px;
-  width: 100%;
-}
-
-.dropdown-btn.is-active {
-  border: 2px solid var(--dark-bg);
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background: var(--dark-bg);
-  width: 100%;
-}
-
-.is-block {
-  display: block;
-}
-
-.category-value {
-  display: flex;
-  align-items: center;
 }
 
 .blue {
@@ -210,19 +209,5 @@ form {
 
 .inline-element .dropdown {
   width: 100px;
-}
-
-ul {
-  list-style: none;
-  border-radius: 5px;
-}
-
-li {
-  padding: 0.5rem;
-  border-radius: 5px;
-}
-
-li:hover {
-  background: var(--icon-color);
 }
 </style>
