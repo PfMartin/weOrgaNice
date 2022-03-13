@@ -65,6 +65,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, ComputedRef } from 'vue';
 import { useStore } from 'vuex';
+import { supabase } from '@/supabase/init';
 
 import { REPEATING_UNITS } from '@/utils/constants';
 
@@ -131,17 +132,27 @@ export default defineComponent({
       selectedRepeating.value.name = unit.name;
     };
 
-    const submitTodo = (): void => {
-      console.log(title.value);
-      console.log(selectedCategory.value.name);
-      console.log(dueDate.value);
+    const submitTodo = async (): Promise<void> => {
+      const todo: Todo = {
+        category_id: selectedCategory.value.id,
+        // list_type_id: 1,
+        due_date: dueDate.value,
+        name: title.value,
+        details: description.value,
+        user_id: store.getters.user.id,
+      };
 
-      console.log(selectedRepeating.value);
+      if (isRepeating.value) {
+        const { name, value } = selectedRepeating.value;
+        todo.repeating_unit = name;
+        todo.repeating_number = value;
+      }
 
-      // const todo = {
-      //   title: title.value,
-      //   category: selectedCategory.value.name,
-      // };
+      const { data, error } = await supabase.from('todo').insert([todo]);
+      console.log(data);
+      if (error) {
+        console.error(error);
+      }
     };
 
     return {
