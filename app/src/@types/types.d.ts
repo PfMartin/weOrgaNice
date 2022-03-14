@@ -7,6 +7,12 @@ interface CategoryType {
   default: boolean;
 }
 
+interface RepeatingName {
+  id: number;
+  name: string;
+  multiple_of_hour: number;
+}
+
 interface RepeatingType {
   name: string;
   value: number;
@@ -18,6 +24,6 @@ interface Todo {
   details: string;
   due_date: string;
   user_id: string;
-  repeating_unit?: string;
-  repeating_number?: number;
+  repeating_name_id?: number;
+  repeating_value?: number;
 }

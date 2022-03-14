@@ -48,7 +48,7 @@
               />
 
               <dropdown
-                :options="REPEATING_UNITS"
+                :options="repeatingNames"
                 :selectedOption="selectedRepeating"
                 @on-select-option="selectRepeatingUnit"
                 :isDisabled="!isRepeating"
@@ -56,18 +56,16 @@
             </div>
           </div>
         </div>
-        <submit-button text="Submit" @submit="submitTodo" />
+        <submit-button text="Create" @submit="submitTodo" />
       </form>
     </template>
   </content-tile>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, ComputedRef } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import { supabase } from '@/supabase/init';
-
-import { REPEATING_UNITS } from '@/utils/constants';
 
 import ContentTile from '@/components/ContentTile.vue';
 import ColorInput from '@/components/ColorInput.vue';
@@ -91,11 +89,8 @@ export default defineComponent({
     const description = ref<string>('');
     const dueDate = ref<string>('');
 
-    const categories: ComputedRef<CategoryType[]> = computed(
-      (): CategoryType[] => {
-        return store.getters.categories;
-      }
-    );
+    const categories = ref<CategoryType[]>([]);
+    const repeatingNames = ref<RepeatingName[]>([]);
 
     const selectedCategory = ref<CategoryType>({
       id: 0,
@@ -104,7 +99,35 @@ export default defineComponent({
       default: false,
     });
 
-    const setInitialValues = () => {
+    const selectedRepeatingName = ref<RepeatingName>({
+      id: 0,
+      name: 'Select a repeating unit',
+      multiple_of_hour: 0,
+    });
+
+    const getCategories = async (): Promise<void> => {
+      const { data, error } = await supabase.from('category').select('*');
+
+      if (error) {
+        console.error(error);
+      } else if (data) {
+        categories.value = data;
+      }
+    };
+
+    const getRepeatingNames = async (): Promise<void> => {
+      const { data, error } = await supabase.from('repeating_name').select('*');
+
+      if (error) {
+        console.error(error);
+      } else if (data) {
+        repeatingNames.value = data;
+      }
+    };
+
+    const setInitialValues = async () => {
+      await getCategories();
+      await getRepeatingNames();
       const defaultCategory = categories.value.find(
         (category: CategoryType) => category.default === true
       );
@@ -112,9 +135,11 @@ export default defineComponent({
       if (defaultCategory) {
         selectedCategory.value = defaultCategory;
       }
-    };
 
-    setInitialValues();
+      if (repeatingNames.value) {
+        selectedRepeatingName.value = repeatingNames.value[0];
+      }
+    };
 
     const selectCategory = (category: CategoryType): void => {
       selectedCategory.value = category;
@@ -130,12 +155,12 @@ export default defineComponent({
     });
     const selectRepeatingUnit = (unit: Record<string, string>): void => {
       selectedRepeating.value.name = unit.name;
+      console.log(selectedRepeating.value);
     };
 
     const submitTodo = async (): Promise<void> => {
       const todo: Todo = {
         category_id: selectedCategory.value.id,
-        // list_type_id: 1,
         due_date: dueDate.value,
         name: title.value,
         details: description.value,
@@ -144,8 +169,15 @@ export default defineComponent({
 
       if (isRepeating.value) {
         const { name, value } = selectedRepeating.value;
-        todo.repeating_unit = name;
-        todo.repeating_number = value;
+
+        const selectedName = repeatingNames.value.find(
+          (repeatingName) => repeatingName.name === name
+        );
+
+        if (selectedName) {
+          todo.repeating_name_id = selectedName.id;
+          todo.repeating_value = value;
+        }
       }
 
       const { data, error } = await supabase.from('todo').insert([todo]);
@@ -155,6 +187,8 @@ export default defineComponent({
       }
     };
 
+    setInitialValues();
+
     return {
       title,
       description,
@@ -162,11 +196,11 @@ export default defineComponent({
       selectCategory,
       selectedCategory,
       categories,
+      repeatingNames,
       isRepeating,
       checkIsRepeating,
       selectRepeatingUnit,
       selectedRepeating,
-      REPEATING_UNITS,
       submitTodo,
     };
   },
