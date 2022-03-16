@@ -26,6 +26,7 @@
             class=""
             id="due-date"
             v-model="dueDate"
+            onkeydown="return false"
           />
         </div>
         <div class="input-element">
