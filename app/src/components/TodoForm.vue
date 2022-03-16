@@ -66,12 +66,14 @@
 import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import { supabase } from '@/supabase/init';
+import { useRouter } from 'vue-router';
 
 import ContentTile from '@/components/ContentTile.vue';
 import ColorInput from '@/components/ColorInput.vue';
 import CheckBox from '@/components/CheckBox.vue';
 import Dropdown from '@/components/Dropdown.vue';
 import SubmitButton from '@/components/SubmitButton.vue';
+import { validateString } from '@/utils/validation';
 
 export default defineComponent({
   name: 'TodoForm',
@@ -84,6 +86,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
 
     const title = ref<string>('');
     const description = ref<string>('');
@@ -158,6 +161,7 @@ export default defineComponent({
       console.log(selectedRepeating.value);
     };
 
+    const formErrors = ref<string[]>([]);
     const submitTodo = async (): Promise<void> => {
       const todo: Todo = {
         category_id: selectedCategory.value.id,
@@ -180,11 +184,25 @@ export default defineComponent({
         }
       }
 
-      const { data, error } = await supabase.from('todo').insert([todo]);
-      console.log(data);
-      if (error) {
-        console.error(error);
+      formErrors.value = validateTodo(todo);
+
+      if (!formErrors.value.length) {
+        const { error } = await supabase.from('todo').insert([todo]);
+        if (error) {
+          console.error(error);
+        } else {
+          router.push({ name: 'Home' });
+        }
+      } else {
+        console.log(formErrors.value);
       }
+    };
+
+    const validateTodo = (todo: Todo) => {
+      return [
+        validateString(todo.name, 'title'),
+        validateString(todo.details, 'description'),
+      ].filter((error) => error !== '');
     };
 
     setInitialValues();
