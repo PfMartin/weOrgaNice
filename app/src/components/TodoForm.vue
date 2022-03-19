@@ -3,11 +3,11 @@
     <template v-slot:default>
       <form @submit.prevent>
         <div class="input-element">
-          <form-element-label title="Title" errorMsg="error" />
+          <form-element-label title="Title" :errorMsg="formErrors.title" />
           <input type="text" required class="" id="title" v-model="title" />
         </div>
         <div class="input-element">
-          <form-element-label title="Category" errorMsg="error" />
+          <form-element-label title="Category" />
           <dropdown
             labelId="category"
             :options="categories"
@@ -16,11 +16,14 @@
           />
         </div>
         <div class="input-element">
-          <formElementLabel title="Description" errorMsg="error" />
+          <formElementLabel
+            title="Description"
+            :errorMsg="formErrors.description"
+          />
           <textarea required class="" id="description" v-model="description" />
         </div>
         <div class="input-element">
-          <form-element-label title="Due Date" errorMsg="error" />
+          <form-element-label title="Due Date" />
           <input
             type="date"
             required
@@ -65,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { supabase } from '@/supabase/init';
 import { useRouter } from 'vue-router';
@@ -165,7 +168,10 @@ export default defineComponent({
       console.log(selectedRepeating.value);
     };
 
-    const formErrors = ref<string[]>([]);
+    let formErrors = ref<Record<string, string>>({
+      title: '',
+      description: '',
+    });
     const submitTodo = async (): Promise<void> => {
       const todo: Todo = {
         category_id: selectedCategory.value.id,
@@ -189,8 +195,9 @@ export default defineComponent({
       }
 
       formErrors.value = validateTodo(todo);
+      const hasErrors = formErrors.value.title || formErrors.value.description;
 
-      if (!formErrors.value.length) {
+      if (!hasErrors) {
         const { error } = await supabase.from('todo').insert([todo]);
         if (error) {
           console.error(error);
@@ -203,11 +210,26 @@ export default defineComponent({
     };
 
     const validateTodo = (todo: Todo) => {
-      return [
-        validateString(todo.name, 'title'),
-        validateString(todo.details, 'description'),
-      ].filter((error) => error !== '');
+      return {
+        title: validateString(todo.name, 'title'),
+        description: validateString(todo.details, 'description'),
+      };
     };
+
+    /* Reset errors, as soon as the user types in some value */
+    const resetStringError = (currentValue: string, watchedValue: string) => {
+      if (currentValue !== '') {
+        formErrors.value[watchedValue] = '';
+      }
+    };
+
+    watch(title, (currentValue) => {
+      resetStringError(currentValue, 'title');
+    });
+
+    watch(description, (currentValue) => {
+      resetStringError(currentValue, 'description');
+    });
 
     setInitialValues();
 
@@ -224,6 +246,7 @@ export default defineComponent({
       selectRepeatingUnit,
       selectedRepeating,
       submitTodo,
+      formErrors,
     };
   },
 });
