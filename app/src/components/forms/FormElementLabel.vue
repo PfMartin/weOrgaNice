@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ComputedRef, computed } from 'vue';
 
 export default defineComponent({
   name: 'FormElementLabel',
@@ -14,14 +14,23 @@ export default defineComponent({
     title: {
       type: String,
     },
-    forId: {
-      type: String,
-    },
     errorMsg: {
       type: String,
     },
   },
-  setup() {},
+  setup(props) {
+    const forId: ComputedRef<string> = computed(() => {
+      if (props.title) {
+        return props.title.replace(' ', '-').toLowerCase();
+      }
+
+      return '';
+    });
+
+    return {
+      forId,
+    };
+  },
 });
 </script>
 

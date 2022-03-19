@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="dropdown">
-    <label v-if="label" for="selectedTitle">{{ label }}</label>
     <button
       @blur="closeDropdown"
       tabindex="0"
@@ -9,7 +8,7 @@
       class="dropdown-btn"
       :class="{ 'is-active': hasDropdown }"
       :disabled="isDisabled"
-      id="selectedTitle"
+      :id="labelId"
     >
       <div class="option-value">
         <div
@@ -48,10 +47,7 @@ export default defineComponent({
   name: 'Dropdown',
   emits: ['on-select-option'],
   props: {
-    label: {
-      type: String,
-      reqired: false,
-    },
+    labelId: String,
     options: Object,
     selectedOption: Object,
     isDisabled: {

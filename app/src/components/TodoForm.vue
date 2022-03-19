@@ -3,31 +3,24 @@
     <template v-slot:default>
       <form @submit.prevent>
         <div class="input-element">
-          <form-element-label title="Title" forId="title" errorMsg="error" />
+          <form-element-label title="Title" errorMsg="error" />
           <input type="text" required class="" id="title" v-model="title" />
         </div>
         <div class="input-element">
+          <form-element-label title="Category" errorMsg="error" />
           <dropdown
-            label="Category"
+            labelId="category"
             :options="categories"
             :selectedOption="selectedCategory"
             @on-select-option="selectCategory"
           />
         </div>
         <div class="input-element">
-          <formElementLabel
-            title="Description"
-            forId="description"
-            errorMsg="error"
-          />
+          <formElementLabel title="Description" errorMsg="error" />
           <textarea required class="" id="description" v-model="description" />
         </div>
         <div class="input-element">
-          <form-element-label
-            title="Due Date"
-            forId="due-date"
-            errorMsg="error"
-          />
+          <form-element-label title="Due Date" errorMsg="error" />
           <input
             type="date"
             required
