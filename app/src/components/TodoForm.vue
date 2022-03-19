@@ -3,7 +3,7 @@
     <template v-slot:default>
       <form @submit.prevent>
         <div class="input-element">
-          <label for="title">Title</label>
+          <form-element-label title="Title" forId="title" errorMsg="error" />
           <input type="text" required class="" id="title" v-model="title" />
         </div>
         <div class="input-element">
@@ -15,11 +15,19 @@
           />
         </div>
         <div class="input-element">
-          <label for="description">Description</label>
+          <formElementLabel
+            title="Description"
+            forId="description"
+            errorMsg="error"
+          />
           <textarea required class="" id="description" v-model="description" />
         </div>
         <div class="input-element">
-          <label for="due-date">Due Date</label>
+          <form-element-label
+            title="Due Date"
+            forId="due-date"
+            errorMsg="error"
+          />
           <input
             type="date"
             required
@@ -74,6 +82,7 @@ import ColorInput from '@/components/ColorInput.vue';
 import CheckBox from '@/components/CheckBox.vue';
 import Dropdown from '@/components/Dropdown.vue';
 import SubmitButton from '@/components/SubmitButton.vue';
+import FormElementLabel from '@/components/forms/FormElementLabel.vue';
 import { validateString } from '@/utils/validation';
 
 export default defineComponent({
@@ -84,6 +93,7 @@ export default defineComponent({
     CheckBox,
     Dropdown,
     SubmitButton,
+    FormElementLabel,
   },
   setup() {
     const store = useStore();
