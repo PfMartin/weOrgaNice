@@ -43,6 +43,7 @@
 import { defineComponent, ref } from 'vue';
 import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 import BrandBanner from '@/components/BrandBanner.vue';
 import ContentTile from '@/components/ContentTile.vue';
@@ -55,6 +56,13 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
+
+    const forwardToHome = () => {
+      if (store.getters.user) {
+        router.push({ name: 'Dashboard' });
+      }
+    };
 
     const email = ref<ReactiveString>(undefined);
     const password = ref<ReactiveString>(undefined);
@@ -76,6 +84,8 @@ export default defineComponent({
         }, 5000);
       }
     };
+
+    forwardToHome();
 
     return { email, password, errorMsg, login };
   },
