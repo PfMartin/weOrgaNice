@@ -1,5 +1,6 @@
 <template>
   <div v-if="appReady" class="app">
+    <system-message :msg="systemMessage" :msgType="systemMessageType" />
     <router-view v-slot="{ Component, route }">
       <transition :name="route.meta.transition" mode="out-in">
         <component :is="Component" />
@@ -10,15 +11,16 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, ComputedRef, onMounted } from 'vue';
-// import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { supabase } from './supabase/init';
+import SystemMessage from '@/components/ui/SystemMessage.vue';
 
 import MenuBar from '@/components/MenuBar.vue';
 
 export default defineComponent({
   components: {
     MenuBar,
+    SystemMessage,
   },
   setup() {
     const store = useStore();
@@ -52,9 +54,26 @@ export default defineComponent({
       appReady.value = true;
     });
 
+    let systemMessage = ref<string>('');
+    const systemMessageType = ref<string>('warning');
+
+    const getSystemMessage = () => {
+      setTimeout(() => {
+        systemMessage.value = 'An error occurred';
+      }, 1000);
+
+      setTimeout(() => {
+        systemMessage.value = '';
+      }, 4000);
+    };
+
+    getSystemMessage();
+
     return {
       appReady,
       user,
+      systemMessage,
+      systemMessageType,
     };
   },
 });
@@ -74,6 +93,9 @@ export default defineComponent({
   --accent-yellow: #ffc812;
   --text-muted: #b7b7b7;
   --white: #fff;
+  --success: #0a310e;
+  --error: #530000;
+  --warning: #fd5d00;
 }
 
 * {

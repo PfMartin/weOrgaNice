@@ -43,7 +43,7 @@ export default defineComponent({
 
 .error-message {
   padding-right: 5px;
-  color: #530000;
+  color: var(--error);
   font-size: small;
 }
 </style>
