@@ -81,6 +81,8 @@ import SubmitButton from '@/components/SubmitButton.vue';
 import FormElementLabel from '@/components/forms/FormElementLabel.vue';
 import { validateString } from '@/utils/validation';
 
+import { STORE_ACTIONS } from '@/store/actions';
+
 export default defineComponent({
   name: 'TodoForm',
   components: {
@@ -232,6 +234,11 @@ export default defineComponent({
     });
 
     setInitialValues();
+
+    store.dispatch(STORE_ACTIONS.SET_SYSTEM_MESSAGE, {
+      msg: 'Todo has been created',
+      msgType: 'success',
+    });
 
     return {
       title,

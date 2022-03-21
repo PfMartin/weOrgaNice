@@ -77,6 +77,7 @@ export default defineComponent({
   background: var(--dark-bg);
   padding: 0 1rem;
   border-radius: 7px;
+  margin: 0.5rem 0;
 }
 
 header {

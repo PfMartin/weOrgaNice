@@ -87,7 +87,7 @@ export default defineComponent({
   padding: 0.3rem 1rem;
   border: 2px solid var(--icon-color);
   border-radius: 7px;
-  opacity: 0.8;
+  opacity: 0.9;
   color: var(--icon-color);
 }
 

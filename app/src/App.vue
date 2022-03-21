@@ -1,6 +1,6 @@
 <template>
   <div v-if="appReady" class="app">
-    <system-message :msg="systemMessage" :msgType="systemMessageType" />
+    <system-message :msg="systemMessage.msg" :msgType="systemMessage.msgType" />
     <router-view v-slot="{ Component, route }">
       <transition :name="route.meta.transition" mode="out-in">
         <component :is="Component" />
@@ -14,6 +14,7 @@ import { defineComponent, ref, computed, ComputedRef, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { supabase } from './supabase/init';
 import SystemMessage from '@/components/ui/SystemMessage.vue';
+import { STORE_ACTIONS } from '@/store/actions';
 
 import MenuBar from '@/components/MenuBar.vue';
 
@@ -24,6 +25,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+
+    const systemMessage: ComputedRef<SystemMessage> = computed(() => {
+      return store.getters.systemMessage;
+    });
     // const router = useRouter();
 
     onMounted(async () => {
@@ -34,7 +39,7 @@ export default defineComponent({
       if (error) {
         console.error(error);
       } else {
-        store.dispatch('setCategories', categories);
+        store.dispatch(STORE_ACTIONS.SET_CATEGORIES, categories);
       }
     });
 
@@ -49,31 +54,14 @@ export default defineComponent({
     }
 
     supabase.auth.onAuthStateChange((_, session: any) => {
-      console.log('state Change');
-      store.dispatch('setUser', session);
+      store.dispatch(STORE_ACTIONS.SET_USER, session);
       appReady.value = true;
     });
-
-    let systemMessage = ref<string>('');
-    const systemMessageType = ref<string>('warning');
-
-    const getSystemMessage = () => {
-      setTimeout(() => {
-        systemMessage.value = 'An error occurred';
-      }, 1000);
-
-      setTimeout(() => {
-        systemMessage.value = '';
-      }, 4000);
-    };
-
-    getSystemMessage();
 
     return {
       appReady,
       user,
       systemMessage,
-      systemMessageType,
     };
   },
 });

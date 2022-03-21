@@ -27,3 +27,8 @@ interface Todo {
   repeating_name_id?: number;
   repeating_value?: number;
 }
+
+interface SystemMessage {
+  msg: string;
+  msgType: string;
+}

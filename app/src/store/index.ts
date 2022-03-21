@@ -8,6 +8,10 @@ export default createStore({
   state: {
     user: null,
     categories: [],
+    systemMessage: {
+      msg: '',
+      msgType: '',
+    },
   },
   mutations,
   actions,
