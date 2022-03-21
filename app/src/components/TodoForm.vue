@@ -205,6 +205,10 @@ export default defineComponent({
           console.error(error);
         } else {
           router.push({ name: 'Home' });
+          store.dispatch(STORE_ACTIONS.SET_SYSTEM_MESSAGE, {
+            msg: 'Todo has been created',
+            msgType: 'success',
+          });
         }
       } else {
         console.log(formErrors.value);
@@ -234,11 +238,6 @@ export default defineComponent({
     });
 
     setInitialValues();
-
-    store.dispatch(STORE_ACTIONS.SET_SYSTEM_MESSAGE, {
-      msg: 'Todo has been created',
-      msgType: 'success',
-    });
 
     return {
       title,
