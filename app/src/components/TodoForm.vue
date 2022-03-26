@@ -167,7 +167,6 @@ export default defineComponent({
     });
     const selectRepeatingUnit = (unit: Record<string, string>): void => {
       selectedRepeating.value.name = unit.name;
-      console.log(selectedRepeating.value);
     };
 
     let formErrors = ref<Record<string, string>>({
@@ -202,7 +201,10 @@ export default defineComponent({
       if (!hasErrors) {
         const { error } = await supabase.from('todo').insert([todo]);
         if (error) {
-          console.error(error);
+          store.dispatch(STORE_ACTIONS.SET_SYSTEM_MESSAGE, {
+            msg: error.message,
+            msgType: 'error',
+          });
         } else {
           router.push({ name: 'Home' });
           store.dispatch(STORE_ACTIONS.SET_SYSTEM_MESSAGE, {
@@ -210,8 +212,6 @@ export default defineComponent({
             msgType: 'success',
           });
         }
-      } else {
-        console.log(formErrors.value);
       }
     };
 
@@ -262,6 +262,10 @@ export default defineComponent({
 form {
   display: grid;
   grid-gap: 1rem;
+}
+
+textarea {
+  resize: vertical;
 }
 
 .blue {
