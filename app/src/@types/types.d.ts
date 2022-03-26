@@ -19,11 +19,13 @@ interface RepeatingType {
 }
 
 interface Todo {
+  id?: number;
   category_id: number;
   name: string;
   details: string;
   due_date: string;
   user_id: string;
+  created_at?: string;
   repeating_name_id?: number;
   repeating_value?: number;
 }

@@ -8,6 +8,9 @@
     </header>
 
     <div v-if="hasCard" :class="[cardClass, backgroundClass]">
+      <slot name="card"></slot>
+    </div>
+    <div v-else>
       <slot name="default"></slot>
     </div>
     <footer>

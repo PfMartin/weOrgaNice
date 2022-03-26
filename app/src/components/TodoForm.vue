@@ -1,6 +1,6 @@
 <template lang="html">
   <content-tile headline="Create Todo" :bgColor="selectedCategory.color">
-    <template v-slot:default>
+    <template v-slot:card>
       <form @submit.prevent>
         <div class="input-element">
           <form-element-label title="Title" :errorMsg="formErrors.title" />
