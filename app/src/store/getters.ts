@@ -8,4 +8,7 @@ export default {
   systemMessage(state: Store.State): SystemMessage {
     return state.systemMessage;
   },
+  isMenuOpen(state: Store.State): boolean {
+    return state.isMenuOpen;
+  },
 };

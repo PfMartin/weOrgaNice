@@ -12,6 +12,7 @@ export default createStore({
       msg: '',
       msgType: '',
     },
+    isMenuOpen: false,
   },
   mutations,
   actions,

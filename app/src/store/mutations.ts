@@ -8,4 +8,7 @@ export default {
   setSystemMessage(state: Store.State, systemMessage: SystemMessage): void {
     state.systemMessage = systemMessage;
   },
+  toggleMenu(state: Store.State, newValue: boolean): void {
+    state.isMenuOpen = newValue;
+  },
 };

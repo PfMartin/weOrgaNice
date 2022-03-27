@@ -16,10 +16,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, computed, ComputedRef } from 'vue';
 import Fries from '@/components/Fries.vue';
 import { supabase } from '../supabase/init';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+import { STORE_ACTIONS } from '@/store/actions';
 
 export default defineComponent({
   name: 'MenuBar',
@@ -28,17 +31,19 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
 
     const logout = async (): Promise<void> => {
-      console.log('logout');
       await supabase.auth.signOut();
       router.push({ name: 'Login' });
     };
 
-    const isMenuOpen = ref<boolean>(false);
+    const isMenuOpen: ComputedRef<boolean> = computed((): boolean => {
+      return store.getters.isMenuOpen;
+    });
 
     const toggleMenu = (): void => {
-      isMenuOpen.value = !isMenuOpen.value;
+      store.dispatch(STORE_ACTIONS.TOGGLE_MENU);
     };
 
     return {
@@ -73,5 +78,11 @@ export default defineComponent({
   height: 40px;
   border: 2px solid var(--icon-color);
   border-radius: 100%;
+}
+
+.menu {
+  top: 40px;
+  position: fixed;
+  background: var(--bg-dark-color);
 }
 </style>

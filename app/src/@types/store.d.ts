@@ -3,5 +3,6 @@ declare namespace Store {
     user: User | null;
     categories: CategoryType[];
     systemMessage: SystemMessage;
+    isMenuOpen: boolean;
   }
 }

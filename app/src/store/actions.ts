@@ -6,6 +6,7 @@ export enum STORE_ACTIONS {
   SET_USER = 'setUser',
   SET_CATEGORIES = 'setCategories',
   SET_SYSTEM_MESSAGE = 'setSystemMessage',
+  TOGGLE_MENU = 'toggleMenu',
 }
 
 export default {
@@ -28,5 +29,9 @@ export default {
 
       context.commit(STORE_ACTIONS.SET_SYSTEM_MESSAGE, emptySystemMessage);
     }, 5000);
+  },
+
+  toggleMenu(context: Context): void {
+    context.commit(STORE_ACTIONS.TOGGLE_MENU, !context.state.isMenuOpen);
   },
 };
