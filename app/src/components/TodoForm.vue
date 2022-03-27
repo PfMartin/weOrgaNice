@@ -268,22 +268,6 @@ textarea {
   resize: vertical;
 }
 
-.blue {
-  background-color: var(--accent-blue);
-}
-
-.violet {
-  background-color: var(--accent-violet);
-}
-
-.teal {
-  background-color: var(--accent-teal);
-}
-
-.yellow {
-  background-color: var(--accent-yellow);
-}
-
 .text-muted {
   color: var(--text-muted);
 }

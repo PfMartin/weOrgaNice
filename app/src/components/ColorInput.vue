@@ -52,22 +52,6 @@ export default defineComponent({
   border-radius: 5px;
 }
 
-.blue {
-  background-color: var(--accent-blue);
-}
-
-.violet {
-  background-color: var(--accent-violet);
-}
-
-.teal {
-  background-color: var(--accent-teal);
-}
-
-.yellow {
-  background-color: var(--accent-yellow);
-}
-
 .active-blue,
 .active-violet,
 .active-teal,

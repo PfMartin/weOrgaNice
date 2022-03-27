@@ -3,7 +3,7 @@
     <brand-banner color="violet" />
     <form @submit.prevent="register" class="">
       <content-tile headline="Register" bgColor="violet">
-        <template v-slot:default>
+        <template v-slot:card>
           <div class="input-element">
             <label for="email">Email</label>
             <input type="email" required class="" id="email" v-model="email" />

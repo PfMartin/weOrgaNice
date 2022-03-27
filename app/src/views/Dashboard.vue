@@ -24,3 +24,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="css" scoped>
+.dashboard > * {
+  margin: 0.5rem 0;
+}
+</style>

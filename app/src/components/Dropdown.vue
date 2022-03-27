@@ -103,6 +103,7 @@ export default defineComponent({
 }
 
 .dropdown-content {
+  color: #fff;
   display: none;
   position: absolute;
   background: var(--dark-bg);
@@ -128,22 +129,6 @@ export default defineComponent({
 
 button .color-box {
   border-color: var(--dark-bg);
-}
-
-.blue {
-  background-color: var(--accent-blue);
-}
-
-.violet {
-  background-color: var(--accent-violet);
-}
-
-.teal {
-  background-color: var(--accent-teal);
-}
-
-.yellow {
-  background-color: var(--accent-yellow);
 }
 
 ul {

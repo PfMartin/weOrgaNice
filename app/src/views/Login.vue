@@ -3,7 +3,7 @@
     <brand-banner />
     <form @submit.prevent="login">
       <content-tile headline="Login">
-        <template v-slot:default>
+        <template v-slot:card>
           <div class="input-element">
             <label for="email">Email</label>
             <input type="email" required class="" id="email" v-model="email" />

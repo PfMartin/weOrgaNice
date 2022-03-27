@@ -7,7 +7,7 @@
       </router-link>
     </header>
 
-    <div v-if="hasCard" :class="[cardClass, backgroundClass]">
+    <div v-if="hasCard" :class="[cardClass, bgColor]">
       <slot name="card"></slot>
     </div>
     <div v-else>
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ComputedRef } from 'vue';
+import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'ContentTile',
   props: {
@@ -50,26 +50,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const backgroundClass: ComputedRef<string> = computed((): string => {
-      switch (props.bgColor) {
-        case 'teal':
-          return 'bg-teal';
-        case 'violet':
-          return 'bg-violet';
-        case 'yellow':
-          return 'bg-yellow';
-        case 'grey':
-          return 'bg-grey';
-        default:
-          return 'bg-blue';
-      }
-    });
-
     const cardClass: string = 'card';
 
     return {
       cardClass,
-      backgroundClass,
     };
   },
 });
@@ -78,9 +62,8 @@ export default defineComponent({
 <style lang="css" scoped>
 .container {
   background: var(--dark-bg);
-  padding: 0 1rem;
-  border-radius: 7px;
-  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 12px;
 }
 
 header {
@@ -96,34 +79,14 @@ header a {
 }
 
 .card {
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 7px;
-}
-
-.bg-blue {
-  background: var(--accent-blue);
-}
-
-.bg-teal {
-  background: var(--accent-teal);
-}
-
-.bg-violet {
-  background: var(--accent-violet);
-}
-
-.bg-yellow {
-  background: var(--accent-yellow);
-}
-
-.bg-grey {
-  background: var(--icon-color);
 }
 
 footer {
   display: flex;
   justify-content: flex-end;
-  padding: 0.5rem;
+  margin-top: 0.5rem;
   font-size: 0.8rem;
 }
 </style>

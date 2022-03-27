@@ -93,7 +93,7 @@ export default defineComponent({
 }
 
 body {
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 0;
   box-sizing: border-box;
   background: var(--main-bg-color);
@@ -190,5 +190,23 @@ button {
 .slide-left-leave-active,
 .slide-right-leave-active {
   transition: 0.2s ease-out;
+}
+
+.blue {
+  background-color: var(--accent-blue);
+}
+
+.teal {
+  background: var(--accent-teal);
+  color: var(--main-bg-color);
+}
+
+.yellow {
+  background: var(--accent-yellow);
+  color: var(--main-bg-color);
+}
+
+.violet {
+  background: var(--accent-violet);
 }
 </style>
