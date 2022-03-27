@@ -10,8 +10,8 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script lang="ts">
+import { defineComponent, computed, ComputedRef } from 'vue';
 export default defineComponent({
   name: 'BrandBanner',
   props: {
@@ -20,6 +20,15 @@ export default defineComponent({
       required: false,
       default: 'blue',
     },
+  },
+  setup(props) {
+    const color: ComputedRef<string> = computed((): string => {
+      return `${props.color}-font`;
+    });
+
+    return {
+      color,
+    };
   },
 });
 </script>
@@ -36,11 +45,11 @@ export default defineComponent({
   margin-right: 1rem;
 }
 
-.blue {
+.blue-font {
   color: var(--accent-blue);
 }
 
-.violet {
+.violet-font {
   color: var(--accent-violet);
 }
 </style>
