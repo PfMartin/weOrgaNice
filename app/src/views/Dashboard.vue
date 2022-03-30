@@ -3,6 +3,7 @@
     <overview-todos />
     <content-tile
       headline="Shopping"
+      iconName="cart"
       :hasCard="false"
       :hasCreateButton="true"
       createLink="create-shopping"

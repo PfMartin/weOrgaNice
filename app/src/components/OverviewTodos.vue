@@ -1,6 +1,7 @@
 <template lang="html">
   <content-tile
     headline="ToDos"
+    iconName="checkmark"
     :hasCreateButton="true"
     createLink="create-todo"
     :hasCard="false"

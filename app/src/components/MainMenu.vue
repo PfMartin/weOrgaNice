@@ -1,6 +1,20 @@
 <template lang="html">
   <div class="menu-container">
-    <div v-if="isMenuOpen" class="menu">This is the menu</div>
+    <transition name="slide" mode="out-in">
+      <ul v-if="isMenuOpen" class="menu">
+        <li>
+          <a href="#"><ion-icon name="apps" /> Categories</a>
+        </li>
+
+        <li>
+          <a href="#"><ion-icon name="checkmark" />Todos</a>
+        </li>
+
+        <li>
+          <a href="#"><ion-icon name="cart" />Shopping</a>
+        </li>
+      </ul>
+    </transition>
   </div>
 </template>
 
@@ -31,10 +45,52 @@ export default defineComponent({
 
 .menu {
   position: fixed;
-  padding: 1rem;
-  height: 100%;
-  background: var(--icon-color);
+  left: 20px;
+  padding: 1.5rem 1rem;
+  width: 81%;
+  background: var(--dark-bg);
   border-radius: 10px;
-  opacity: 0.98;
+  z-index: 1;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+}
+
+li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  color: var(--icon-color);
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+ion-icon {
+  margin-right: 5px;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+
+.slide-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-leave-active {
+  transition: all 0.2s ease-in;
+}
+
+.slide-enter-to,
+.slide-leave-from {
+  transform: translateX(0);
 }
 </style>

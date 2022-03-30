@@ -23,3 +23,5 @@ export default defineComponent({
   setup() {},
 });
 </script>
+
+<style lang="css" scoped></style>

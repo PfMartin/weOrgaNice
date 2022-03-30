@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="container">
     <header>
-      <h2>{{ headline }}</h2>
+      <h2><ion-icon v-if="iconName" :name="iconName" />{{ headline }}</h2>
       <router-link v-if="hasCreateButton" :to="createLink">
         <ion-icon name="add" size="small" />
       </router-link>
@@ -48,6 +48,10 @@ export default defineComponent({
       required: false,
       default: '',
     },
+    iconName: {
+      type: String,
+      required: false,
+    },
   },
   setup(props) {
     const cardClass: string = 'card';
@@ -64,6 +68,15 @@ export default defineComponent({
   background: var(--dark-bg);
   padding: 0.5rem;
   border-radius: 12px;
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+}
+
+ion-icon {
+  margin-right: 5px;
 }
 
 header {
