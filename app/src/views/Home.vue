@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <menu-bar></menu-bar>
     <main-menu></main-menu>
     <router-view></router-view>
+    <menu-bar></menu-bar>
   </div>
 </template>
 

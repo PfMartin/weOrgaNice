@@ -9,8 +9,8 @@ import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
   name: 'Fries',
-  props: ['toggle-menu', 'isMenuOpen'],
-  emit: ['toggleIsMenuOpen'],
+  props: ['isMenuOpen'],
+  emit: ['toggle-menu'],
   setup(props, { emit }) {
     const friesClasses = computed(() => {
       return {
