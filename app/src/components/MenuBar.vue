@@ -72,6 +72,7 @@ export default defineComponent({
   align-items: center;
   justify-content: space-between;
   height: 30px;
+  z-index: 2;
 }
 
 .open-button {

@@ -1,5 +1,8 @@
 <template lang="html">
   <div class="menu-container">
+    <transition name="fade">
+      <div v-if="isMenuOpen" class="background-cover"></div>
+    </transition>
     <transition name="slide" mode="out-in">
       <ul v-if="isMenuOpen" class="menu">
         <li>
@@ -41,13 +44,26 @@ export default defineComponent({
 <style lang="css" scoped>
 .menu-container {
   position: relative;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.background-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--main-bg-color);
+  opacity: 0.6;
 }
 
 .menu {
   position: fixed;
-  left: 20px;
+  bottom: 40px;
+  width: 50%;
   padding: 1.5rem 1rem;
-  width: 81%;
   background: var(--dark-bg);
   border-radius: 10px;
   z-index: 1;
@@ -78,7 +94,7 @@ ion-icon {
 
 .slide-enter-from,
 .slide-leave-to {
-  transform: translateX(-100%);
+  transform: translateY(100vh);
 }
 
 .slide-enter-active {
@@ -91,6 +107,16 @@ ion-icon {
 
 .slide-enter-to,
 .slide-leave-from {
-  transform: translateX(0);
+  transform: translateY(40px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
