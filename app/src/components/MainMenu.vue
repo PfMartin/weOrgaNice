@@ -5,17 +5,17 @@
     </transition>
     <transition name="slide" mode="out-in">
       <ul v-if="isMenuOpen" class="menu">
-        <li>
-          <a href="#"><ion-icon name="apps" /> Categories</a>
-        </li>
+        <router-link to="categories-overview">
+          <li><ion-icon name="apps" /> Categories</li>
+        </router-link>
 
-        <li>
-          <a href="#"><ion-icon name="checkmark" />Todos</a>
-        </li>
+        <router-link to="todo-overview">
+          <li><ion-icon name="checkmark" />Todos</li>
+        </router-link>
 
-        <li>
-          <a href="#"><ion-icon name="cart" />Shopping</a>
-        </li>
+        <router-link to="shopping-overview">
+          <li><ion-icon name="cart" />Shopping</li>
+        </router-link>
       </ul>
     </transition>
   </div>
@@ -76,16 +76,16 @@ ul {
   list-style: none;
 }
 
-li:not(:last-child) {
+a:not(:last-child) {
   margin-bottom: 1rem;
 }
 
 a {
-  display: flex;
   align-items: center;
+  font-size: 1.2rem;
+  display: flex;
   color: var(--icon-color);
   text-decoration: none;
-  font-size: 1.2rem;
 }
 
 ion-icon {

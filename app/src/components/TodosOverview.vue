@@ -1,6 +1,5 @@
 <template lang="html">
   <content-tile
-    v-if="todos"
     headline="ToDos"
     iconName="checkmark"
     :hasCreateButton="true"
@@ -31,7 +30,7 @@ import ListElement from '@/components/ui/ListElement.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 export default defineComponent({
-  name: 'OverviewTodos',
+  name: 'TodosOverview',
   components: {
     ContentTile,
     ListElement,

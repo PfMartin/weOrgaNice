@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <overview-todos />
+    <todos-overview />
     <content-tile
       headline="Shopping"
       iconName="cart"
@@ -14,14 +14,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import OverviewTodos from '@/components/OverviewTodos.vue';
+import TodosOverview from '@/components/TodosOverview.vue';
 import ContentTile from '@/components/ContentTile.vue';
 
 export default defineComponent({
   name: 'Dashboard',
   components: {
     ContentTile,
-    OverviewTodos,
+    TodosOverview,
   },
 });
 </script>

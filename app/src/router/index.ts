@@ -38,6 +38,18 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import(/* webpackChunkName: 'createTodo'*/ '@/views/CreateTodo.vue'),
       },
+      {
+        path: 'categories-overview',
+        name: 'CategoriesOverview',
+        meta: {
+          title: 'CategoriesOverview',
+          auth: true,
+        },
+        component: () =>
+          import(
+            /* webpackChunkName: 'createTodo'*/ '@/views/CategoriesOverview.vue'
+          ),
+      },
     ],
   },
   {
