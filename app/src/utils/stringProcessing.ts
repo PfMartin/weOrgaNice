@@ -1,6 +1,6 @@
 const LIST_ITEM_MAX_NAME_LENGTH = 38;
 
-const LIST_ITEM_MAX_DETAILS_LENGTH = 52;
+const LIST_ITEM_MAX_DETAILS_LENGTH = 50;
 
 export const cutString = (string: string, property: string): string => {
   let reducedString = string;

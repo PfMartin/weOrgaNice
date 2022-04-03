@@ -55,7 +55,7 @@ export default defineComponent({
 }
 
 .fries {
-  width: 20px;
+  width: 25px;
 }
 
 .fries::before {
