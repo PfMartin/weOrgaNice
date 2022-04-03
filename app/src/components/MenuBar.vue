@@ -1,6 +1,8 @@
 <template lang="html">
   <div class="menu-container">
-    <div class="features-left"></div>
+    <div class="features-left">
+      <ion-icon @click="routeBack" name="arrow-back" size="large"></ion-icon>
+    </div>
     <div class="open-button">
       <fries :isMenuOpen="isMenuOpen" @toggle-menu="toggleMenu" />
     </div>
@@ -42,10 +44,15 @@ export default defineComponent({
       store.dispatch(STORE_ACTIONS.TOGGLE_MENU);
     };
 
+    const routeBack = (): void => {
+      router.go(-1);
+    };
+
     return {
       isMenuOpen,
       toggleMenu,
       logout,
+      routeBack,
     };
   },
 });

@@ -1,5 +1,6 @@
 <template lang="html">
   <content-tile
+    v-if="todos"
     headline="ToDos"
     iconName="checkmark"
     :hasCreateButton="true"
@@ -7,7 +8,8 @@
     :hasCard="false"
   >
     <template v-slot:default>
-      <div class="todos-container">
+      <loading-spinner v-if="loading" />
+      <div v-else class="todos-container">
         <template v-for="todo in todos">
           <list-element :todo="todo" />
         </template>
@@ -26,12 +28,14 @@ import { STORE_ACTIONS } from '@/store/actions';
 
 import ContentTile from '@/components/ContentTile.vue';
 import ListElement from '@/components/ui/ListElement.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 export default defineComponent({
   name: 'OverviewTodos',
   components: {
     ContentTile,
     ListElement,
+    LoadingSpinner,
   },
   setup() {
     const store = useStore();
@@ -54,6 +58,7 @@ export default defineComponent({
     };
 
     const todos = ref<Todo[]>([]);
+    const loading = ref<boolean>(true);
 
     const getTodos = async (): Promise<void> => {
       const categories = await getCategories();
@@ -87,6 +92,8 @@ export default defineComponent({
 
             return element;
           });
+
+          loading.value = false;
         }
       }
     };
@@ -95,6 +102,7 @@ export default defineComponent({
 
     return {
       todos,
+      loading,
     };
   },
 });
@@ -110,5 +118,25 @@ header {
   display: grid;
   grid-gap: 0.5rem;
   font-size: 0.9rem;
+}
+
+.loading {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  color: var(--icon-color);
+}
+
+.loading ion-icon {
+  animation: loader 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
