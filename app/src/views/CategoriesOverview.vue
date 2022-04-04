@@ -10,7 +10,7 @@
       <loading-spinner v-if="loading" />
       <div v-else class="categories-container">
         <template v-for="category in categories">
-          <p>{{ category.name }}</p>
+          <list-element :element="category" />
         </template>
       </div>
     </template>
@@ -25,12 +25,16 @@ import { supabase } from '@/supabase/init';
 
 import ContentTile from '@/components/ContentTile.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import ListElement from '@/components/ui/ListElement.vue';
+
+import { prettifyDate, cutString } from '@/utils/stringProcessing';
 
 export default defineComponent({
   name: 'CategoriesOverview',
   components: {
     ContentTile,
     LoadingSpinner,
+    ListElement,
   },
   setup() {
     const store = useStore();
@@ -47,7 +51,18 @@ export default defineComponent({
           msgType: 'error',
         });
       } else if (data) {
-        categories.value = data;
+        categories.value = data
+          .map((category) => {
+            category.name = cutString(category.name, 'name');
+            if (category.details) {
+              category.details = cutString(category.details, 'details');
+            }
+            category.colorClass = category.color;
+            category.created_at = prettifyDate(category.created_at);
+
+            return category;
+          })
+          .sort();
 
         loading.value = false;
       }
@@ -63,4 +78,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.categories-container {
+  display: grid;
+  grid-gap: 0.5rem;
+  font-size: 0.9rem;
+}
+</style>

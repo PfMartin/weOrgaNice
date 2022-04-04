@@ -10,7 +10,7 @@
       <loading-spinner v-if="loading" />
       <div v-else class="todos-container">
         <template v-for="todo in todos">
-          <list-element :todo="todo" />
+          <list-element :element="todo" />
         </template>
       </div>
     </template>
@@ -21,13 +21,13 @@
 import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import { supabase } from '@/supabase/init';
-import { cutString } from '@/utils/stringProcessing';
-
 import { STORE_ACTIONS } from '@/store/actions';
 
 import ContentTile from '@/components/ContentTile.vue';
 import ListElement from '@/components/ui/ListElement.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+
+import { cutString, prettifyDate } from '@/utils/stringProcessing';
 
 export default defineComponent({
   name: 'TodosOverview',
@@ -75,21 +75,17 @@ export default defineComponent({
             msgType: 'error',
           });
         } else if (data) {
-          todos.value = data.map((element) => {
-            element.due_date = element.due_date
-              .slice(0, 10)
-              .split('-')
-              .reverse()
-              .join('.');
+          todos.value = data.map((todo) => {
+            todo.due_date = prettifyDate(todo.due_date);
 
-            element.name = cutString(element.name, 'name');
-            element.details = cutString(element.details, 'details');
+            todo.name = cutString(todo.name, 'name');
+            todo.details = cutString(todo.details, 'details');
 
-            element.colorClass = categories.find(
-              (category) => category.id === element.category_id
+            todo.colorClass = categories.find(
+              (category) => category.id === todo.category_id
             )?.color;
 
-            return element;
+            return todo;
           });
 
           loading.value = false;
@@ -117,17 +113,6 @@ header {
   display: grid;
   grid-gap: 0.5rem;
   font-size: 0.9rem;
-}
-
-.loading {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  color: var(--icon-color);
-}
-
-.loading ion-icon {
-  animation: loader 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 
 @keyframes loader {

@@ -18,3 +18,7 @@ export const cutString = (string: string, property: string): string => {
 
   return reducedString;
 };
+
+export const prettifyDate = (date: string) => {
+  return date.slice(0, 10).split('-').reverse().join('.');
+};

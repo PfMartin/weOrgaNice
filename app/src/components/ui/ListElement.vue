@@ -1,15 +1,16 @@
 <template lang="html">
-  <div class="list-item" :class="todo.colorClass" :id="todo.id">
+  <div class="list-item" :class="element.colorClass" :id="element.id">
     <div class="main">
       <p>
-        <b>{{ todo.name }}</b>
+        <b>{{ element.name }}</b>
       </p>
       <small class="due-date"
-        ><ion-icon name="calendar"></ion-icon>{{ todo.due_date }}</small
+        ><ion-icon name="calendar"></ion-icon
+        >{{ element.due_date || element.created_at }}</small
       >
     </div>
     <small class="details">
-      {{ todo.details }}
+      {{ element.details || 'No details' }}
     </small>
   </div>
 </template>
@@ -20,7 +21,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'ListElement',
   props: {
-    todo: Object,
+    element: Object,
   },
 });
 </script>
