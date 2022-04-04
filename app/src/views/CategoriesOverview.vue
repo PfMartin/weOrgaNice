@@ -6,17 +6,59 @@
     createLink="create-category"
     :hasCard="false"
   >
+    <template v-slot:default>
+      <loading-spinner v-if="loading" />
+      <div v-else class="categories-container">
+        <template v-for="category in categories">
+          <p>{{ category.name }}</p>
+        </template>
+      </div>
+    </template>
   </content-tile>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { useStore } from 'vuex';
+import { STORE_ACTIONS } from '@/store/actions';
+import { supabase } from '@/supabase/init';
+
 import ContentTile from '@/components/ContentTile.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 export default defineComponent({
   name: 'CategoriesOverview',
   components: {
     ContentTile,
+    LoadingSpinner,
+  },
+  setup() {
+    const store = useStore();
+
+    const loading = ref<boolean>(true);
+    const categories = ref<CategoryType[]>([]);
+
+    const getCategories = async (): Promise<void> => {
+      const { data, error } = await supabase.from('category').select('*');
+
+      if (error) {
+        store.dispatch(STORE_ACTIONS.SET_SYSTEM_MESSAGE, {
+          msg: error.message,
+          msgType: 'error',
+        });
+      } else if (data) {
+        categories.value = data;
+
+        loading.value = false;
+      }
+    };
+
+    getCategories();
+
+    return {
+      categories,
+      loading,
+    };
   },
 });
 </script>

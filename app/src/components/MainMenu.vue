@@ -89,6 +89,11 @@ export default defineComponent({
   z-index: 1;
 }
 
+.menu:focus {
+  outline: none;
+  border: none;
+}
+
 ul {
   display: flex;
   flex-direction: column;
