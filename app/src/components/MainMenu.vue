@@ -4,17 +4,23 @@
       <div v-if="isMenuOpen" class="background-cover"></div>
     </transition>
     <transition name="slide" mode="out-in">
-      <ul v-if="isMenuOpen" class="menu">
+      <ul
+        v-if="isMenuOpen"
+        id="main-menu"
+        class="menu"
+        @blur="closeMenu"
+        tabindex="0"
+      >
         <router-link to="categories-overview">
-          <li><ion-icon name="apps" /> Categories</li>
+          <li @click="closeMenu"><ion-icon name="apps" /> Categories</li>
         </router-link>
 
         <router-link to="todo-overview">
-          <li><ion-icon name="checkmark" />Todos</li>
+          <li @click="closeMenu"><ion-icon name="checkmark" />Todos</li>
         </router-link>
 
         <router-link to="shopping-overview">
-          <li><ion-icon name="cart" />Shopping</li>
+          <li @click="closeMenu"><ion-icon name="cart" />Shopping</li>
         </router-link>
       </ul>
     </transition>
@@ -22,8 +28,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ComputedRef, computed } from 'vue';
+import { defineComponent, ComputedRef, computed, watch } from 'vue';
 import { useStore } from 'vuex';
+import { STORE_ACTIONS } from '@/store/actions';
 
 export default defineComponent({
   name: 'Menu',
@@ -34,8 +41,21 @@ export default defineComponent({
       return store.getters.isMenuOpen;
     });
 
+    const closeMenu = () => {
+      store.dispatch(STORE_ACTIONS.TOGGLE_MENU);
+    };
+
+    watch(isMenuOpen, (newValue) => {
+      if (newValue === true) {
+        setTimeout(() => {
+          document.getElementById('main-menu')?.focus();
+        }, 100);
+      }
+    });
+
     return {
       isMenuOpen,
+      closeMenu,
     };
   },
 });
@@ -94,7 +114,7 @@ ion-icon {
 
 .slide-enter-from,
 .slide-leave-to {
-  transform: translateY(100vh);
+  transform: translateY(300px);
 }
 
 .slide-enter-active {
@@ -107,7 +127,7 @@ ion-icon {
 
 .slide-enter-to,
 .slide-leave-from {
-  transform: translateY(40px);
+  transform: translateY(0px);
 }
 
 .fade-enter-active,
