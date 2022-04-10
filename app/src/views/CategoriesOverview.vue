@@ -1,20 +1,22 @@
 <template lang="html">
-  <content-tile
-    headline="categories"
-    iconName="apps"
-    :hasCreateButton="true"
-    createLink="create-category"
-    :hasCard="false"
-  >
-    <template v-slot:default>
-      <loading-spinner v-if="loading" />
-      <div v-else class="categories-container">
-        <template v-for="category in categories">
-          <list-element :element="category" />
-        </template>
-      </div>
-    </template>
-  </content-tile>
+  <div class="categories-overview">
+    <content-tile
+      headline="Categories"
+      iconName="apps"
+      :hasCreateButton="true"
+      createLink="create-category"
+      :hasCard="false"
+    >
+      <template v-slot:default>
+        <loading-spinner v-if="loading" />
+        <div v-else class="categories-container">
+          <template v-for="category in categories">
+            <list-element :element="category" />
+          </template>
+        </div>
+      </template>
+    </content-tile>
+  </div>
 </template>
 
 <script lang="ts">
@@ -62,7 +64,12 @@ export default defineComponent({
 
             return category;
           })
-          .sort();
+          .sort((a, b) => {
+            if (a.name > b.name) {
+              return 1;
+            }
+            return -1;
+          });
 
         loading.value = false;
       }
@@ -79,6 +86,10 @@ export default defineComponent({
 </script>
 
 <style lang="css" scoped>
+.categories-overview {
+  margin: 0.5rem 0;
+}
+
 .categories-container {
   display: grid;
   grid-gap: 0.5rem;

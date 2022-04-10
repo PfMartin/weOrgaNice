@@ -39,7 +39,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    const getCategories = async (): Promise<CategoryType[]> => {
+    const getCategories = async (): Promise<SupabaseCategory[]> => {
       const { data, error } = await supabase
         .from('category')
         .select('id,color');

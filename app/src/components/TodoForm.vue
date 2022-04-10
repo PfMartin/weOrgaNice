@@ -77,7 +77,7 @@ import ContentTile from '@/components/ContentTile.vue';
 import ColorInput from '@/components/ColorInput.vue';
 import CheckBox from '@/components/CheckBox.vue';
 import Dropdown from '@/components/Dropdown.vue';
-import SubmitButton from '@/components/SubmitButton.vue';
+import SubmitButton from '@/components/ui/SubmitButton.vue';
 import FormElementLabel from '@/components/forms/FormElementLabel.vue';
 import { validateString } from '@/utils/validation';
 
@@ -101,14 +101,15 @@ export default defineComponent({
     const description = ref<string>('');
     const dueDate = ref<string>('');
 
-    const categories = ref<CategoryType[]>([]);
+    const categories = ref<SupabaseCategory[]>([]);
     const repeatingNames = ref<RepeatingName[]>([]);
 
-    const selectedCategory = ref<CategoryType>({
+    const selectedCategory = ref<SupabaseCategory>({
       id: 0,
       name: 'Select a category',
+      details: '',
       color: 'blue',
-      default: false,
+      isDefault: false,
     });
 
     const selectedRepeatingName = ref<RepeatingName>({
@@ -123,7 +124,12 @@ export default defineComponent({
       if (error) {
         console.error(error);
       } else if (data) {
-        categories.value = data;
+        categories.value = data.sort((a, b) => {
+          if (a.name > b.name) {
+            return 1;
+          }
+          return -1;
+        });
       }
     };
 
@@ -141,7 +147,7 @@ export default defineComponent({
       await getCategories();
       await getRepeatingNames();
       const defaultCategory = categories.value.find(
-        (category: CategoryType) => category.default === true
+        (category: SupabaseCategory) => category.isDefault === true
       );
 
       if (defaultCategory) {
@@ -153,7 +159,7 @@ export default defineComponent({
       }
     };
 
-    const selectCategory = (category: CategoryType): void => {
+    const selectCategory = (category: SupabaseCategory): void => {
       selectedCategory.value = category;
     };
 

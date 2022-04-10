@@ -1,10 +1,14 @@
 type ReactiveString = string | undefined;
 
 interface CategoryType {
-  id: number;
   name: string;
+  details: string;
   color: string;
-  default: boolean;
+  isDefault: boolean;
+}
+
+interface SupabaseCategory extends CategoryType {
+  id: number;
 }
 
 interface RepeatingName {
