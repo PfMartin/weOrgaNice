@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
           auth: true,
         },
         component: () =>
-          import(/* webpackChunkName: 'createTodo'*/ '@/views/Dashboard.vue'),
+          import(/* webpackChunkName: 'dashboard'*/ '@/views/Dashboard.vue'),
       },
       {
         path: 'create-todo',
@@ -47,7 +47,19 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () =>
           import(
-            /* webpackChunkName: 'createTodo'*/ '@/views/CategoriesOverview.vue'
+            /* webpackChunkName: 'categoriesOverview'*/ '@/views/CategoriesOverview.vue'
+          ),
+      },
+      {
+        path: 'create-category',
+        name: 'CreateCategory',
+        meta: {
+          title: 'CreateCategory',
+          auth: true,
+        },
+        component: () =>
+          import(
+            /* webpackChunkName: 'createCategory'*/ '@/views/CreateCategory.vue'
           ),
       },
     ],

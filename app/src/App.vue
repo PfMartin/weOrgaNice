@@ -93,7 +93,7 @@ export default defineComponent({
 }
 
 body {
-  margin: 0.5rem;
+  margin: 0 0.5rem;
   padding: 0;
   box-sizing: border-box;
   background: var(--main-bg-color);
