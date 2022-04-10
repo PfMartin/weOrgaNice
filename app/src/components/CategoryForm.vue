@@ -37,7 +37,7 @@ import { defineComponent, ref } from 'vue';
 import ContentTile from '@/components/ContentTile.vue';
 import FormElementLabel from '@/components/forms/FormElementLabel.vue';
 import SubmitButton from '@/components/ui/SubmitButton.vue';
-import CheckBox from '@/components/CheckBox.vue';
+import CheckBox from '@/components/forms/CheckBox.vue';
 import { validateString } from '@/utils/validation';
 
 export default defineComponent({

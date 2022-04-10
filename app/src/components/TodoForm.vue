@@ -75,7 +75,7 @@ import { useRouter } from 'vue-router';
 
 import ContentTile from '@/components/ContentTile.vue';
 import ColorInput from '@/components/ColorInput.vue';
-import CheckBox from '@/components/CheckBox.vue';
+import CheckBox from '@/components/forms/CheckBox.vue';
 import Dropdown from '@/components/Dropdown.vue';
 import SubmitButton from '@/components/ui/SubmitButton.vue';
 import FormElementLabel from '@/components/forms/FormElementLabel.vue';
