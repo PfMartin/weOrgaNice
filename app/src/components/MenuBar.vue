@@ -2,6 +2,7 @@
   <div class="menu-container">
     <div class="features-left">
       <ion-icon @click="routeBack" name="arrow-back" size="large"></ion-icon>
+      <ion-icon @click="routeHome" name="home-outline" size="large"></ion-icon>
     </div>
     <div class="open-button">
       <fries :isMenuOpen="isMenuOpen" @toggle-menu="toggleMenu" />
@@ -48,11 +49,16 @@ export default defineComponent({
       router.go(-1);
     };
 
+    const routeHome = (): void => {
+      router.push({ name: 'Dashboard' });
+    };
+
     return {
       isMenuOpen,
       toggleMenu,
       logout,
       routeBack,
+      routeHome,
     };
   },
 });
@@ -90,6 +96,7 @@ export default defineComponent({
 }
 
 ion-icon {
+  margin: 0 0.2rem;
   color: var(--icon-color);
 }
 

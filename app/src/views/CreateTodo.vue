@@ -15,4 +15,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.create-todo {
+  margin: 0.5rem 0;
+}
+</style>
