@@ -1,7 +1,7 @@
 declare namespace Store {
   interface State {
     user: User | null;
-    categories: CategoryType[];
+    categories: Category[];
     systemMessage: SystemMessage;
     isMenuOpen: boolean;
   }

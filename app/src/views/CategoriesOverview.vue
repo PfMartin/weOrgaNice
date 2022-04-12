@@ -42,7 +42,7 @@ export default defineComponent({
     const store = useStore();
 
     const loading = ref<boolean>(true);
-    const categories = ref<CategoryType[]>([]);
+    const categories = ref<Category[]>([]);
 
     const getCategories = async (): Promise<void> => {
       const { data, error } = await supabase.from('category').select('*');

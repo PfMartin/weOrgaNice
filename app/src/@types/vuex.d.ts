@@ -1,6 +1,6 @@
 interface StoreState {
   user: null | User;
-  categories: CategoryType[];
+  categories: Category[];
 }
 
 interface StoreMutations {

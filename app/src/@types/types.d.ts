@@ -1,13 +1,14 @@
 type ReactiveString = string | undefined;
 
-interface CategoryType {
+interface Category {
   name: string;
   details: string;
   color: string;
   isDefault: boolean;
+  user_id?: string;
 }
 
-interface SupabaseCategory extends CategoryType {
+interface SupabaseCategory extends Category {
   id: number;
 }
 

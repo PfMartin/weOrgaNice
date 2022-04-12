@@ -15,7 +15,7 @@ export default {
     context.commit(STORE_ACTIONS.SET_USER, user);
   },
 
-  setCategories(context: Context, payload: CategoryType[]): void {
+  setCategories(context: Context, payload: Category[]): void {
     context.commit(STORE_ACTIONS.SET_CATEGORIES, payload);
   },
 
